@@ -58,7 +58,6 @@
     letter-spacing: 0.05em;
   }
 
-  /* === 색상 관리 === */
   .color-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.8rem; }
 
   .color-chip {
@@ -85,7 +84,6 @@
     border-radius: 8px; padding: 2px; cursor: pointer; background: var(--surface-alt);
   }
 
-  /* === 설정 === */
   .settings-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -102,16 +100,11 @@
     border-radius: 6px; padding: 2px; cursor: pointer; background: var(--surface-alt);
   }
 
-  .setting-item input[type="range"] {
-    width: 80px; accent-color: var(--accent);
-  }
+  .setting-item input[type="range"] { width: 80px; accent-color: var(--accent); }
 
   .setting-item .range-val {
     font-size: 0.78rem; color: var(--text); min-width: 36px; text-align: right;
   }
-
-  /* === 단어 치환 === */
-  .replace-section { margin-top: 0.5rem; }
 
   .replace-pair {
     display: flex; gap: 0.4rem; align-items: center;
@@ -125,7 +118,6 @@
   }
 
   .replace-pair input[type="text"]:focus { border-color: var(--accent); }
-
   .replace-pair .arrow { color: var(--text-muted); font-size: 0.85rem; flex-shrink: 0; }
 
   .replace-pair button {
@@ -146,23 +138,43 @@
     font-size: 0.75rem; color: #bbb; margin-top: 0.4rem; line-height: 1.5;
   }
 
-  /* === 입력 === */
   .input-section label {
     display: block; font-size: 0.85rem; font-weight: 600;
     color: var(--text-muted); text-transform: uppercase;
     letter-spacing: 0.05em; margin-bottom: 0.6rem;
   }
 
+  .textarea-wrapper {
+    position: relative;
+  }
+
   textarea {
     width: 100%; min-height: 220px; background: var(--surface-alt);
     border: 1px solid var(--border); border-radius: 10px; padding: 1rem;
+    padding-right: 2.8rem;
     color: var(--text); font-size: 0.92rem; line-height: 1.7;
     resize: vertical; outline: none; font-family: inherit;
   }
   textarea:focus { border-color: var(--accent); }
   textarea::placeholder { color: #bbb; font-size: 0.85rem; }
 
-  /* === 버튼 === */
+  .clear-textarea-btn {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    width: 30px; height: 30px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: color 0.15s, border-color 0.15s;
+    z-index: 2;
+  }
+  .clear-textarea-btn:hover { color: #e74c3c; border-color: #e74c3c; }
+
   .btn-group { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
 
   .btn {
@@ -186,7 +198,6 @@
   }
   .btn-small:hover { background: var(--accent-hover); }
 
-  /* === 챕터 === */
   .chapter-list { display: none; }
   .chapter-list.active { display: block; }
 
@@ -209,7 +220,6 @@
   .chapter-item-actions button:hover { color: #e74c3c; background: rgba(231,76,60,0.08); }
   .chapter-item-actions .edit-chapter-btn:hover { color: var(--accent-hover); background: rgba(201,160,220,0.1); }
 
-  /* === 미리보기 === */
   .preview-section { display: none; }
   .preview-section.active { display: block; }
   .preview-hint { font-size: 0.78rem; color: #bbb; margin-bottom: 0.6rem; }
@@ -232,7 +242,6 @@
     padding-bottom: 0.3rem; border-bottom: 2px solid var(--border);
   }
 
-  /* === 멀티셀렉트 === */
   .multi-toolbar {
     display: none; align-items: center; gap: 0.5rem;
     padding: 0.6rem 1rem; background: #f3eef8;
@@ -263,7 +272,6 @@
   }
   .multi-toolbar .multi-clear-btn:hover { border-color: #e74c3c; color: #e74c3c; }
 
-  /* === 선택 모드 토글 (모바일) === */
   .select-mode-toggle {
     display: none; align-items: center; gap: 0.5rem;
     margin-bottom: 0.5rem;
@@ -291,7 +299,6 @@
     .select-mode-toggle { display: flex; }
   }
 
-  /* === 팝업 === */
   .color-popup {
     position: fixed; display: none; background: var(--surface);
     border: 1px solid var(--border); border-radius: 10px; padding: 0.5rem;
@@ -312,11 +319,9 @@
     font-size: 0.75rem; color: var(--text-muted);
   }
 
-  /* === 범례 === */
   .legend { display: flex; flex-wrap: wrap; gap: 0.6rem; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; }
   .legend-icon { width: 12px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid rgba(0,0,0,0.06); }
 
-  /* === 토스트 === */
   .toast {
     position: fixed; bottom: 2rem; left: 50%;
     transform: translateX(-50%) translateY(20px);
@@ -328,7 +333,6 @@
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* === 모달 === */
   .modal-overlay {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.25); z-index: 3000;
@@ -372,7 +376,6 @@
 
 <div class="container">
 
-  <!-- 색상 관리 -->
   <div class="panel">
     <div class="panel-title">형광펜 색상 관리</div>
     <div class="color-list" id="colorList"></div>
@@ -382,41 +385,18 @@
     </div>
   </div>
 
-  <!-- 스타일 설정 -->
   <div class="panel">
     <div class="panel-title">스타일 설정</div>
     <div class="settings-grid">
-      <div class="setting-item">
-        <span>내레이션 색</span>
-        <input type="color" id="narrationColorInput" value="#3a3a3a">
-      </div>
-      <div class="setting-item">
-        <span>독백 색</span>
-        <input type="color" id="monologueColorInput" value="#aaaaaa">
-      </div>
-      <div class="setting-item">
-        <span>챕터 제목색</span>
-        <input type="color" id="chapterColorInput" value="#b07cc8">
-      </div>
-      <div class="setting-item">
-        <span>글자 크기</span>
-        <input type="range" id="fontSizeInput" min="12" max="24" value="16" step="1">
-        <span class="range-val" id="fontSizeVal">16px</span>
-      </div>
-      <div class="setting-item">
-        <span>자간</span>
-        <input type="range" id="letterSpacingInput" min="-1" max="5" value="0" step="0.5">
-        <span class="range-val" id="letterSpacingVal">0px</span>
-      </div>
-      <div class="setting-item">
-        <span>행간</span>
-        <input type="range" id="lineHeightInput" min="1.2" max="3.5" value="1.9" step="0.1">
-        <span class="range-val" id="lineHeightVal">1.9</span>
-      </div>
+      <div class="setting-item"><span>내레이션 색</span><input type="color" id="narrationColorInput" value="#3a3a3a"></div>
+      <div class="setting-item"><span>독백 색</span><input type="color" id="monologueColorInput" value="#aaaaaa"></div>
+      <div class="setting-item"><span>챕터 제목색</span><input type="color" id="chapterColorInput" value="#b07cc8"></div>
+      <div class="setting-item"><span>글자 크기</span><input type="range" id="fontSizeInput" min="12" max="24" value="16" step="1"><span class="range-val" id="fontSizeVal">16px</span></div>
+      <div class="setting-item"><span>자간</span><input type="range" id="letterSpacingInput" min="-1" max="5" value="0" step="0.5"><span class="range-val" id="letterSpacingVal">0px</span></div>
+      <div class="setting-item"><span>행간</span><input type="range" id="lineHeightInput" min="1.2" max="3.5" value="1.9" step="0.1"><span class="range-val" id="lineHeightVal">1.9</span></div>
     </div>
   </div>
 
-  <!-- 단어 치환 -->
   <div class="panel">
     <div class="panel-title">단어 치환</div>
     <div id="replacePairs"></div>
@@ -424,10 +404,10 @@
     <div class="replace-info">한국어 조사를 자동 변환합니다 (은/는, 이/가, 을/를, 과/와, 아/야, 으로/로, 이나/나, 이란/란, 이든/든)</div>
   </div>
 
-  <!-- 입력 -->
   <div class="panel input-section">
     <label for="novelInput">소설 전문 입력</label>
-    <textarea id="novelInput" placeholder="&quot;안녕&quot;
+    <div class="textarea-wrapper">
+      <textarea id="novelInput" placeholder="&quot;안녕&quot;
 "안녕"
 「안녕」
 **깡캐:** 안녕
@@ -438,30 +418,26 @@
 (안녕)
 '안녕'
 위의 형식을 독백으로 처리합니다."></textarea>
+      <button class="clear-textarea-btn" id="clearTextareaBtn" title="입력창 비우기">🗑</button>
+    </div>
   </div>
 
-  <!-- 버튼 -->
   <div class="btn-group">
     <button class="btn btn-edit" id="editBtn">편집</button>
     <button class="btn btn-chapter" id="chapterAddBtn">챕터 추가</button>
     <button class="btn btn-convert" id="convertBtn" disabled>변환</button>
   </div>
 
-  <!-- 챕터 리스트 -->
   <div class="panel chapter-list" id="chapterList">
     <div class="panel-title">챕터 목록</div>
     <div id="chapterItems"></div>
   </div>
 
-  <!-- 미리보기 -->
   <div class="panel preview-section" id="previewSection">
     <div class="panel-title">미리보기</div>
     <div class="preview-hint">대사를 클릭하여 형광펜 색상을 지정하세요 · Shift+클릭 또는 선택 모드로 여러 대사를 선택할 수 있습니다</div>
     <div class="select-mode-toggle" id="selectModeToggle">
-      <label>
-        <div class="toggle-switch" id="toggleSwitch"></div>
-        <span>다중 선택 모드</span>
-      </label>
+      <label><div class="toggle-switch" id="toggleSwitch"></div><span>다중 선택 모드</span></label>
     </div>
     <div class="legend" id="legendArea"></div>
     <div class="multi-toolbar" id="multiToolbar">
@@ -475,11 +451,9 @@
 
 </div>
 
-<!-- 팝업 -->
 <div class="color-popup" id="colorPopup"></div>
 <div class="toast" id="toast"></div>
 
-<!-- 모달 -->
 <div class="modal-overlay" id="chapterModal">
   <div class="modal">
     <h3 id="chapterModalTitle">챕터 이름 입력</h3>
@@ -502,31 +476,34 @@ let currentEditingChapter = -1;
 const selectedDialogues = new Set();
 let selectMode = false;
 
-// DOM
-const colorList = $('colorList'), colorValueInput = $('colorValueInput'), addColorBtn = $('addColorBtn');
-const novelInput = $('novelInput'), editBtn = $('editBtn'), chapterAddBtn = $('chapterAddBtn'), convertBtn = $('convertBtn');
-const previewSection = $('previewSection'), previewBody = $('previewBody');
-const colorPopup = $('colorPopup'), legendArea = $('legendArea');
-const chapterListEl = $('chapterList'), chapterItemsEl = $('chapterItems');
-const narrationColorInput = $('narrationColorInput');
-const monologueColorInput = $('monologueColorInput');
-const chapterColorInput = $('chapterColorInput');
-const fontSizeInput = $('fontSizeInput'), fontSizeVal = $('fontSizeVal');
-const letterSpacingInput = $('letterSpacingInput'), letterSpacingVal = $('letterSpacingVal');
-const lineHeightInput = $('lineHeightInput'), lineHeightVal = $('lineHeightVal');
-const multiToolbar = $('multiToolbar'), multiCount = $('multiCount');
-const multiColorBtns = $('multiColorBtns'), multiClearBtn = $('multiClearBtn');
-const toggleSwitch = $('toggleSwitch');
-const replacePairsEl = $('replacePairs'), addReplaceBtn = $('addReplaceBtn');
+const colorList=$('colorList'), colorValueInput=$('colorValueInput'), addColorBtn=$('addColorBtn');
+const novelInput=$('novelInput'), editBtn=$('editBtn'), chapterAddBtn=$('chapterAddBtn'), convertBtn=$('convertBtn');
+const previewSection=$('previewSection'), previewBody=$('previewBody');
+const colorPopup=$('colorPopup'), legendArea=$('legendArea');
+const chapterListEl=$('chapterList'), chapterItemsEl=$('chapterItems');
+const narrationColorInput=$('narrationColorInput');
+const monologueColorInput=$('monologueColorInput');
+const chapterColorInput=$('chapterColorInput');
+const fontSizeInput=$('fontSizeInput'), fontSizeVal=$('fontSizeVal');
+const letterSpacingInput=$('letterSpacingInput'), letterSpacingVal=$('letterSpacingVal');
+const lineHeightInput=$('lineHeightInput'), lineHeightVal=$('lineHeightVal');
+const multiToolbar=$('multiToolbar'), multiCount=$('multiCount');
+const multiColorBtns=$('multiColorBtns'), multiClearBtn=$('multiClearBtn');
+const toggleSwitch=$('toggleSwitch');
+const replacePairsEl=$('replacePairs'), addReplaceBtn=$('addReplaceBtn');
+const clearTextareaBtn=$('clearTextareaBtn');
 
-const chapterModal = $('chapterModal'), chapterModalTitle = $('chapterModalTitle');
-const chapterNameInput = $('chapterNameInput');
-const chapterModalCancel = $('chapterModalCancel'), chapterModalConfirm = $('chapterModalConfirm');
+const chapterModal=$('chapterModal'), chapterModalTitle=$('chapterModalTitle');
+const chapterNameInput=$('chapterNameInput');
+const chapterModalCancel=$('chapterModalCancel'), chapterModalConfirm=$('chapterModalConfirm');
 let modalCallback = null;
 
 // === DEFAULTS ===
 ['#f8b4c8','#fef3a7','#c8e6b2','#a8d8ea','#d4b5e0','#d5d5d5'].forEach(v => highlightColors.push({value:v}));
 renderColors();
+
+// === CLEAR TEXTAREA ===
+clearTextareaBtn.addEventListener('click', () => { novelInput.value = ''; novelInput.focus(); });
 
 // === COLORS ===
 function renderColors() {
@@ -548,22 +525,22 @@ function renderLegend() {
 
 addColorBtn.addEventListener('click', () => { highlightColors.push({value:colorValueInput.value}); renderColors(); });
 
-// === STYLE SETTINGS ===
-fontSizeInput.addEventListener('input', () => { fontSizeVal.textContent = fontSizeInput.value+'px'; renderFullPreview(); });
-letterSpacingInput.addEventListener('input', () => { letterSpacingVal.textContent = letterSpacingInput.value+'px'; renderFullPreview(); });
-lineHeightInput.addEventListener('input', () => { lineHeightVal.textContent = lineHeightInput.value; renderFullPreview(); });
+// === STYLE ===
+fontSizeInput.addEventListener('input', () => { fontSizeVal.textContent=fontSizeInput.value+'px'; renderFullPreview(); });
+letterSpacingInput.addEventListener('input', () => { letterSpacingVal.textContent=letterSpacingInput.value+'px'; renderFullPreview(); });
+lineHeightInput.addEventListener('input', () => { lineHeightVal.textContent=lineHeightInput.value; renderFullPreview(); });
 narrationColorInput.addEventListener('input', renderFullPreview);
 monologueColorInput.addEventListener('input', renderFullPreview);
 chapterColorInput.addEventListener('input', renderFullPreview);
 
-// === TOGGLE SELECT MODE (MOBILE) ===
+// === SELECT MODE ===
 toggleSwitch.addEventListener('click', () => {
   selectMode = !selectMode;
   toggleSwitch.classList.toggle('on', selectMode);
   if (!selectMode) clearSelection();
 });
 
-// === WORD REPLACEMENT ===
+// === REPLACE ===
 function addReplacePair(from='', to='') {
   replacePairs.push({from, to});
   renderReplacePairs();
@@ -587,7 +564,7 @@ function renderReplacePairs() {
 
 addReplaceBtn.addEventListener('click', () => addReplacePair());
 
-// === KOREAN JOSA ===
+// === JOSA ===
 function hasJongseong(ch) {
   if (!ch) return false;
   const code = ch.charCodeAt(0);
@@ -614,21 +591,16 @@ function fixJosa(text, oldWord, newWord) {
   ];
 
   let result = text;
-
   josaMap.forEach(j => {
-    // oldWord + 종성용 조사 → newWord + 적절한 조사
     const regWith = new RegExp(escRegex(oldWord) + escRegex(j.with), 'g');
     const regWithout = new RegExp(escRegex(oldWord) + escRegex(j.without), 'g');
     const correctJosa = jongNew ? j.with : j.without;
-
     result = result.replace(regWith, newWord + correctJosa);
     result = result.replace(regWithout, newWord + correctJosa);
   });
 
-  // 나머지 단순 치환
   const regPlain = new RegExp(escRegex(oldWord), 'g');
   result = result.replace(regPlain, newWord);
-
   return result;
 }
 
@@ -636,12 +608,26 @@ function escRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
 function applyReplacements(text) {
   let result = text;
-  replacePairs.forEach(p => {
-    if (p.from && p.to) {
-      result = fixJosa(result, p.from, p.to);
-    }
-  });
+  replacePairs.forEach(p => { if (p.from && p.to) result = fixJosa(result, p.from, p.to); });
   return result;
+}
+
+// === STRIP MARKERS FOR DISPLAY ===
+function stripMonologueMarkers(text) {
+  let t = text.trim();
+  // *text*
+  if (/^\*[^*].*[^*]\*$/.test(t) && !t.startsWith('**')) {
+    return t.slice(1, -1);
+  }
+  // (text)
+  if (/^\(.*\)$/.test(t)) {
+    return t.slice(1, -1);
+  }
+  // 'text' or 'text'
+  if (/^[''](.*)['']$/.test(t)) {
+    return t.slice(1, -1);
+  }
+  return t;
 }
 
 // === PARSING ===
@@ -650,22 +636,23 @@ function classifyLine(raw) {
   if (!t) return {type:'empty', original:raw};
   if (/^###\s+/.test(t)) return {type:'heading', original:raw, headingText:t.replace(/^###\s+/,'')};
 
-  // monologue
-  if (/^\*[^*].*[^*]\*$/.test(t) && !t.startsWith('**')) return {type:'monologue', original:raw};
-  if (/^\(.*\)$/.test(t)) return {type:'monologue', original:raw};
-  if (/^[''].*['']$/.test(t)) return {type:'monologue', original:raw};
-
-  // dialogue: **name**: text (check BEFORE 「」 and quotes)
+  // dialogue: **name**: text or **name**: text (FIRST PRIORITY)
   if (/^\*\*[^*]+\*\*\s*[:：]/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
 
-  // dialogue: 「...」
-  if (/^「.*」$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  // monologue: *text* (NOT **)
+  if (/^\*([^*].*[^*])\*$/.test(t) && !t.startsWith('**')) return {type:'monologue', original:raw};
+  // monologue: (text)
+  if (/^\(.+\)$/.test(t)) return {type:'monologue', original:raw};
+  // monologue: 'text' or 'text'
+  if (/^[''].+['']$/.test(t)) return {type:'monologue', original:raw};
 
-  // dialogue: various quotes
-  if (/^".*"$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
-  if (/^\u201C.*\u201D$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
-  if (/^\u201C.*"$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
-  if (/^".*\u201D$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  // dialogue: 「...」
+  if (/^「.+」$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  // dialogue: "..." or "..."
+  if (/^".+"$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  if (/^\u201C.+\u201D$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  if (/^\u201C.+"$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  if (/^".+\u201D$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
 
   return {type:'narration', original:raw};
 }
@@ -673,10 +660,10 @@ function classifyLine(raw) {
 function parseText(text) { return text.split('\n').map(classifyLine); }
 
 function splitByHeadings(arr) {
-  const res = []; let cur = null;
+  const res=[]; let cur=null;
   arr.forEach(item => {
-    if (item.type === 'heading') { if (cur) res.push(cur); cur = {name:item.headingText, lineData:[]}; }
-    else { if (!cur) cur = {name:'챕터 '+(res.length+1), lineData:[]}; cur.lineData.push(item); }
+    if (item.type==='heading') { if (cur) res.push(cur); cur={name:item.headingText, lineData:[]}; }
+    else { if (!cur) cur={name:'챕터 '+(res.length+1), lineData:[]}; cur.lineData.push(item); }
   });
   if (cur && cur.lineData.length) res.push(cur);
   return res;
@@ -690,16 +677,16 @@ editBtn.addEventListener('click', () => {
   const processed = applyReplacements(text);
   const allLines = parseText(processed);
 
-  if (allLines.some(l => l.type === 'heading')) {
+  if (allLines.some(l => l.type==='heading')) {
     splitByHeadings(allLines).forEach(ch => chapters.push(ch));
-    novelInput.value = '';
   } else if (currentEditingChapter >= 0 && currentEditingChapter < chapters.length) {
-    chapters[currentEditingChapter].lineData = allLines.filter(l => l.type !== 'heading');
+    chapters[currentEditingChapter].lineData = allLines.filter(l => l.type!=='heading');
   } else {
     if (!chapters.length) chapters.push({name:'챕터 1', lineData:allLines});
     else chapters[0].lineData = allLines;
   }
 
+  // DO NOT clear novelInput — keep original text
   clearSelection();
   renderChapterList();
   renderFullPreview();
@@ -712,12 +699,12 @@ chapterAddBtn.addEventListener('click', () => {
   const text = novelInput.value;
   if (!text.trim()) return;
   const processed = applyReplacements(text);
-  const filtered = parseText(processed).filter(l => l.type !== 'heading');
+  const filtered = parseText(processed).filter(l => l.type!=='heading');
   if (!filtered.length) return;
 
   openModal('챕터 이름 입력', '챕터 '+(chapters.length+1), name => {
     chapters.push({name, lineData:filtered});
-    novelInput.value = '';
+    // DO NOT clear novelInput
     clearSelection();
     renderChapterList();
     renderFullPreview();
@@ -728,17 +715,15 @@ chapterAddBtn.addEventListener('click', () => {
 
 // === MODAL ===
 function openModal(title, def, cb) {
-  chapterModalTitle.textContent = title;
-  chapterNameInput.value = def;
-  modalCallback = cb;
-  chapterModal.classList.add('show');
-  setTimeout(() => chapterNameInput.focus(), 100);
+  chapterModalTitle.textContent=title; chapterNameInput.value=def;
+  modalCallback=cb; chapterModal.classList.add('show');
+  setTimeout(()=>chapterNameInput.focus(),100);
 }
-function closeModal() { chapterModal.classList.remove('show'); modalCallback = null; }
+function closeModal() { chapterModal.classList.remove('show'); modalCallback=null; }
 chapterModalCancel.addEventListener('click', closeModal);
-chapterModalConfirm.addEventListener('click', () => { if (modalCallback) modalCallback(chapterNameInput.value.trim()||'무제'); closeModal(); });
-chapterNameInput.addEventListener('keydown', e => { if (e.key==='Enter') chapterModalConfirm.click(); });
-chapterModal.addEventListener('click', e => { if (e.target===chapterModal) closeModal(); });
+chapterModalConfirm.addEventListener('click', () => { if(modalCallback) modalCallback(chapterNameInput.value.trim()||'무제'); closeModal(); });
+chapterNameInput.addEventListener('keydown', e => { if(e.key==='Enter') chapterModalConfirm.click(); });
+chapterModal.addEventListener('click', e => { if(e.target===chapterModal) closeModal(); });
 
 // === CHAPTER LIST ===
 function renderChapterList() {
@@ -751,8 +736,8 @@ function renderChapterList() {
     item.innerHTML = `<span class="chapter-item-name">${i+1}. ${esc(ch.name)}</span><span style="font-size:0.75rem;color:#bbb;margin-right:0.5rem;">${ch.lineData.length}줄</span><div class="chapter-item-actions"><button class="edit-chapter-btn" data-idx="${i}">✎</button><button class="delete-chapter-btn" data-idx="${i}">✕</button></div>`;
     item.addEventListener('click', e => {
       if (e.target.closest('.chapter-item-actions')) return;
-      currentEditingChapter = i;
-      novelInput.value = ch.lineData.map(l => l.original).join('\n');
+      currentEditingChapter=i;
+      novelInput.value=ch.lineData.map(l=>l.original).join('\n');
       renderChapterList();
     });
     chapterItemsEl.appendChild(item);
@@ -774,31 +759,31 @@ function selKey(c,l) { return c+'-'+l; }
 
 function clearSelection() {
   selectedDialogues.clear();
-  document.querySelectorAll('.selected-line').forEach(el => el.classList.remove('selected-line'));
+  document.querySelectorAll('.selected-line').forEach(el=>el.classList.remove('selected-line'));
   updateMultiToolbar();
 }
 
 function toggleSelection(chIdx, lineIdx, el) {
-  const key = selKey(chIdx, lineIdx);
+  const key=selKey(chIdx,lineIdx);
   if (selectedDialogues.has(key)) { selectedDialogues.delete(key); el.classList.remove('selected-line'); }
   else { selectedDialogues.add(key); el.classList.add('selected-line'); }
   updateMultiToolbar();
 }
 
 function updateMultiToolbar() {
-  if (selectedDialogues.size > 0) { multiToolbar.classList.add('active'); multiCount.textContent = selectedDialogues.size+'개 선택'; }
+  if (selectedDialogues.size>0) { multiToolbar.classList.add('active'); multiCount.textContent=selectedDialogues.size+'개 선택'; }
   else multiToolbar.classList.remove('active');
 }
 
 function renderMultiToolbar() {
-  multiColorBtns.innerHTML = '';
+  multiColorBtns.innerHTML='';
   highlightColors.forEach(c => {
-    const btn = document.createElement('button'); btn.className='multi-color-btn'; btn.style.background=c.value;
-    btn.addEventListener('click', () => applyToSelected(c.value));
+    const btn=document.createElement('button'); btn.className='multi-color-btn'; btn.style.background=c.value;
+    btn.addEventListener('click', ()=>applyToSelected(c.value));
     multiColorBtns.appendChild(btn);
   });
-  const reset = document.createElement('button'); reset.className='multi-reset-btn'; reset.textContent='✕';
-  reset.addEventListener('click', () => applyToSelected(null));
+  const reset=document.createElement('button'); reset.className='multi-reset-btn'; reset.textContent='✕';
+  reset.addEventListener('click', ()=>applyToSelected(null));
   multiColorBtns.appendChild(reset);
 }
 
@@ -811,58 +796,58 @@ multiClearBtn.addEventListener('click', clearSelection);
 
 // === PREVIEW ===
 function renderFullPreview() {
-  previewBody.innerHTML = '';
-  const monoColor = monologueColorInput.value;
-  const chapColor = chapterColorInput.value;
-  const narrColor = narrationColorInput.value;
-  const fontSize = fontSizeInput.value + 'px';
-  const letterSpacing = letterSpacingInput.value + 'px';
-  const lineHeight = lineHeightInput.value;
+  previewBody.innerHTML='';
+  const monoColor=monologueColorInput.value;
+  const chapColor=chapterColorInput.value;
+  const narrColor=narrationColorInput.value;
+  const fontSize=fontSizeInput.value+'px';
+  const letterSpacing=letterSpacingInput.value+'px';
+  const lineHeight=lineHeightInput.value;
 
-  previewBody.style.fontSize = fontSize;
-  previewBody.style.letterSpacing = letterSpacing;
-  previewBody.style.lineHeight = lineHeight;
+  previewBody.style.fontSize=fontSize;
+  previewBody.style.letterSpacing=letterSpacing;
+  previewBody.style.lineHeight=lineHeight;
 
-  chapters.forEach((ch, chIdx) => {
-    const heading = document.createElement('div');
-    heading.className = 'chapter-heading';
-    heading.textContent = ch.name;
-    heading.style.color = chapColor;
+  chapters.forEach((ch,chIdx) => {
+    const heading=document.createElement('div');
+    heading.className='chapter-heading';
+    heading.textContent=ch.name;
+    heading.style.color=chapColor;
     previewBody.appendChild(heading);
 
-    ch.lineData.forEach((item, lineIdx) => {
-      if (item.type === 'empty') { const br = document.createElement('div'); br.style.height='0.5em'; previewBody.appendChild(br); return; }
+    ch.lineData.forEach((item,lineIdx) => {
+      if (item.type==='empty') { const br=document.createElement('div'); br.style.height='0.5em'; previewBody.appendChild(br); return; }
 
-      const el = document.createElement('div');
-      el.className = 'line';
-      el.dataset.chapter = chIdx;
-      el.dataset.line = lineIdx;
-      const display = esc(item.original.trim());
+      const el=document.createElement('div');
+      el.className='line';
+      el.dataset.chapter=chIdx;
+      el.dataset.line=lineIdx;
 
-      if (item.type === 'narration') {
+      if (item.type==='narration') {
         el.classList.add('line-narration');
-        el.style.color = narrColor;
-        el.innerHTML = display;
-      } else if (item.type === 'dialogue') {
+        el.style.color=narrColor;
+        el.innerHTML=esc(item.original.trim());
+      } else if (item.type==='dialogue') {
         el.classList.add('line-dialogue');
-        el.innerHTML = display;
-        if (item.highlightColor) el.style.background = item.highlightColor+'33';
+        el.innerHTML=esc(item.original.trim());
+        if (item.highlightColor) el.style.background=item.highlightColor+'33';
         if (selectedDialogues.has(selKey(chIdx,lineIdx))) el.classList.add('selected-line');
 
         el.addEventListener('click', e => {
+          e.stopPropagation();
           if (e.shiftKey || selectMode) {
             e.preventDefault();
             toggleSelection(chIdx, lineIdx, el);
-          } else if (selectedDialogues.size > 0) {
+          } else if (selectedDialogues.size>0) {
             toggleSelection(chIdx, lineIdx, el);
           } else {
             openColorPopup(e, chIdx, lineIdx, el);
           }
         });
-      } else if (item.type === 'monologue') {
+      } else if (item.type==='monologue') {
         el.classList.add('line-monologue');
-        el.style.color = monoColor;
-        el.innerHTML = display;
+        el.style.color=monoColor;
+        el.innerHTML=esc(stripMonologueMarkers(item.original));
       }
 
       previewBody.appendChild(el);
@@ -875,31 +860,32 @@ function renderFullPreview() {
 // === POPUP ===
 function openColorPopup(e, chIdx, lineIdx, el) {
   e.stopPropagation();
-  colorPopup.innerHTML = '';
+  colorPopup.innerHTML='';
   highlightColors.forEach(c => {
-    const btn = document.createElement('button'); btn.className='color-popup-btn'; btn.style.background=c.value;
+    const btn=document.createElement('button'); btn.className='color-popup-btn'; btn.style.background=c.value;
     btn.addEventListener('click', ev => { ev.stopPropagation(); applySingle(chIdx,lineIdx,el,c.value); closePopup(); });
     colorPopup.appendChild(btn);
   });
-  const reset = document.createElement('button'); reset.className='color-popup-btn reset-btn'; reset.textContent='✕';
+  const reset=document.createElement('button'); reset.className='color-popup-btn reset-btn'; reset.textContent='✕';
   reset.addEventListener('click', ev => { ev.stopPropagation(); applySingle(chIdx,lineIdx,el,null); closePopup(); });
   colorPopup.appendChild(reset);
 
-  const rect = el.getBoundingClientRect();
-  let left=e.clientX, top=rect.bottom+6;
+  const rect=el.getBoundingClientRect();
+  let left=e.clientX||rect.left, top=rect.bottom+6;
   if (left+220>window.innerWidth) left=window.innerWidth-230;
+  if (left<5) left=5;
   if (top+50>window.innerHeight) top=rect.top-50;
   colorPopup.style.left=left+'px'; colorPopup.style.top=top+'px';
   colorPopup.classList.add('show');
 }
 
-function applySingle(chIdx, lineIdx, el, color) {
-  chapters[chIdx].lineData[lineIdx].highlightColor = color;
-  el.style.background = color ? color+'33' : '';
+function applySingle(chIdx,lineIdx,el,color) {
+  chapters[chIdx].lineData[lineIdx].highlightColor=color;
+  el.style.background=color?color+'33':'';
 }
 
 function closePopup() { colorPopup.classList.remove('show'); }
-document.addEventListener('click', e => { if (!e.target.closest('.color-popup')) closePopup(); });
+document.addEventListener('click', e => { if (!e.target.closest('.color-popup') && !e.target.closest('.line-dialogue')) closePopup(); });
 
 // === CONVERT ===
 convertBtn.addEventListener('click', () => {
@@ -909,14 +895,14 @@ convertBtn.addEventListener('click', () => {
 });
 
 function generateHtml() {
-  const monoColor = monologueColorInput.value;
-  const chapColor = chapterColorInput.value;
-  const narrColor = narrationColorInput.value;
-  const fontSize = fontSizeInput.value+'px';
-  const letterSpacing = letterSpacingInput.value+'px';
-  const lineHeight = lineHeightInput.value;
-  const multi = chapters.length > 1;
-  const p = [];
+  const monoColor=monologueColorInput.value;
+  const chapColor=chapterColorInput.value;
+  const narrColor=narrationColorInput.value;
+  const fontSize=fontSizeInput.value+'px';
+  const letterSpacing=letterSpacingInput.value+'px';
+  const lineHeight=lineHeightInput.value;
+  const multi=chapters.length>1;
+  const p=[];
 
   p.push(`<div style="max-width:720px!important;margin:0 auto!important;padding:1.5rem!important;font-family:'Noto Sans KR',sans-serif!important;font-size:${fontSize}!important;letter-spacing:${letterSpacing}!important;line-height:${lineHeight}!important;color:${narrColor}!important;word-break:keep-all!important;overflow-wrap:break-word!important;box-sizing:border-box!important;">`);
 
@@ -927,17 +913,17 @@ function generateHtml() {
     }
     ch.lineData.forEach(item => {
       if (item.type==='empty') { p.push('<br>'); return; }
-      const t = esc(item.original.trim());
       if (item.type==='narration') {
-        p.push(`<p style="color:${narrColor}!important;margin:0.4em 0!important;">${t}</p>`);
+        p.push(`<p style="color:${narrColor}!important;margin:0.4em 0!important;">${esc(item.original.trim())}</p>`);
       } else if (item.type==='dialogue') {
+        const t=esc(item.original.trim());
         if (item.highlightColor) {
           p.push(`<p style="background:${item.highlightColor}33!important;padding:0.15em 0.4em!important;border-radius:4px!important;margin:0.4em 0!important;">${t}</p>`);
         } else {
           p.push(`<p style="color:${narrColor}!important;margin:0.4em 0!important;">${t}</p>`);
         }
       } else if (item.type==='monologue') {
-        p.push(`<p style="color:${monoColor}!important;font-style:italic!important;margin:0.4em 0!important;">${t}</p>`);
+        p.push(`<p style="color:${monoColor}!important;font-style:italic!important;margin:0.4em 0!important;">${esc(stripMonologueMarkers(item.original))}</p>`);
       }
     });
     if (multi) p.push('</details>');

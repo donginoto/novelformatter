@@ -794,6 +794,18 @@ function applyToSelected(color) {
 
 multiClearBtn.addEventListener('click', clearSelection);
 
+  function formatDialogueText(text) {
+  // **이름:** 대사 형식 처리
+  if (/^\*\*([^*]+)([:：])\s*\*\*/.test(text)) {
+    return text.replace(/^\*\*([^*]+)([:：])\s*\*\*/, '<strong>$1$2</strong>');
+  }
+  // **이름**: 대사 형식 처리
+  if (/^\*\*([^*]+)\*\*\s*([:：])/.test(text)) {
+    return text.replace(/^\*\*([^*]+)\*\*\s*([:：])/, '<strong>$1$2</strong>');
+  }
+  return text;
+  }
+  
 // === PREVIEW ===
 function renderFullPreview() {
   previewBody.innerHTML='';
@@ -828,9 +840,9 @@ function renderFullPreview() {
         el.style.color=narrColor;
         el.innerHTML=esc(item.original.trim());
       } else if (item.type==='dialogue') {
-        el.classList.add('line-dialogue');
-        el.innerHTML=esc(item.original.trim());
-        if (item.highlightColor) el.style.background=item.highlightColor+'33';
+  el.classList.add('line-dialogue');
+  el.innerHTML=formatDialogueText(esc(item.original.trim()));
+  if (item.highlightColor) el.style.background=item.highlightColor+'33';
         if (selectedDialogues.has(selKey(chIdx,lineIdx))) el.classList.add('selected-line');
 
         el.addEventListener('click', e => {
@@ -916,8 +928,8 @@ function generateHtml() {
       if (item.type==='narration') {
         p.push(`<p style="color:${narrColor}!important;margin:0.4em 0!important;">${esc(item.original.trim())}</p>`);
       } else if (item.type==='dialogue') {
-        const t=esc(item.original.trim());
-        if (item.highlightColor) {
+  const t=formatDialogueText(esc(item.original.trim())); // 여기를 수정합니다.
+  if (item.highlightColor) {
           p.push(`<p style="background:${item.highlightColor}33!important;padding:0.15em 0.4em!important;border-radius:4px!important;margin:0.4em 0!important;">${t}</p>`);
         } else {
           p.push(`<p style="color:${narrColor}!important;margin:0.4em 0!important;">${t}</p>`);

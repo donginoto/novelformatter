@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소설 HTML 에디터</title>
+<title>HTML 노벨 포매터</title>
 <style>
   :root {
     --bg: #f8f6f3;
@@ -30,18 +30,8 @@
     padding: 2rem 1rem;
   }
 
-  h1 {
-    font-size: 1.6rem;
-    margin-bottom: 0.3rem;
-    color: var(--text);
-    font-weight: 700;
-  }
-
-  .subtitle {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-  }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; color: var(--text); font-weight: 700; }
+  .subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
 
   .container {
     width: 100%;
@@ -51,7 +41,6 @@
     gap: 1.5rem;
   }
 
-  /* === 공통 패널 === */
   .panel {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -70,136 +59,117 @@
   }
 
   /* === 색상 관리 === */
-  .color-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 0.8rem;
-  }
+  .color-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.8rem; }
 
   .color-chip {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.3rem 0.5rem;
-    font-size: 0.82rem;
-    cursor: default;
+    display: flex; align-items: center; gap: 0.3rem;
+    background: var(--surface-alt); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.3rem 0.5rem; font-size: 0.82rem;
   }
 
   .color-chip .swatch {
-    width: 20px;
-    height: 20px;
-    border-radius: 5px;
+    width: 20px; height: 20px; border-radius: 5px;
     border: 1px solid rgba(0,0,0,0.08);
-    flex-shrink: 0;
   }
 
   .color-chip .remove-color {
-    background: none;
-    border: none;
-    color: #ccc;
-    cursor: pointer;
-    font-size: 0.9rem;
-    line-height: 1;
-    padding: 0 0.15rem;
-    transition: color 0.15s;
+    background: none; border: none; color: #ccc; cursor: pointer;
+    font-size: 0.9rem; line-height: 1; padding: 0 0.15rem; transition: color 0.15s;
   }
-
   .color-chip .remove-color:hover { color: #e74c3c; }
 
-  .color-add-row {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+  .color-add-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
 
   .color-add-row input[type="color"] {
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2px;
-    cursor: pointer;
-    background: var(--surface-alt);
+    width: 36px; height: 36px; border: 1px solid var(--border);
+    border-radius: 8px; padding: 2px; cursor: pointer; background: var(--surface-alt);
   }
 
-  /* === 독백/챕터 색상 설정 === */
-  .settings-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
+  /* === 설정 === */
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.8rem;
   }
 
-  .settings-row label {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+  .setting-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.85rem; color: var(--text-muted);
   }
 
-  .settings-row input[type="color"] {
-    width: 30px;
-    height: 30px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 2px;
-    cursor: pointer;
-    background: var(--surface-alt);
+  .setting-item input[type="color"] {
+    width: 30px; height: 30px; border: 1px solid var(--border);
+    border-radius: 6px; padding: 2px; cursor: pointer; background: var(--surface-alt);
   }
 
-  /* === 입력 영역 === */
+  .setting-item input[type="range"] {
+    width: 80px; accent-color: var(--accent);
+  }
+
+  .setting-item .range-val {
+    font-size: 0.78rem; color: var(--text); min-width: 36px; text-align: right;
+  }
+
+  /* === 단어 치환 === */
+  .replace-section { margin-top: 0.5rem; }
+
+  .replace-pair {
+    display: flex; gap: 0.4rem; align-items: center;
+    margin-bottom: 0.4rem; flex-wrap: wrap;
+  }
+
+  .replace-pair input[type="text"] {
+    flex: 1; min-width: 80px; background: var(--surface-alt);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 0.4rem 0.6rem; font-size: 0.85rem; color: var(--text); outline: none;
+  }
+
+  .replace-pair input[type="text"]:focus { border-color: var(--accent); }
+
+  .replace-pair .arrow { color: var(--text-muted); font-size: 0.85rem; flex-shrink: 0; }
+
+  .replace-pair button {
+    background: none; border: none; color: #ccc; cursor: pointer;
+    font-size: 0.9rem; transition: color 0.15s;
+  }
+  .replace-pair button:hover { color: #e74c3c; }
+
+  .replace-add-btn {
+    background: var(--surface-alt); border: 1px dashed var(--border);
+    border-radius: 8px; padding: 0.4rem 0.8rem; font-size: 0.82rem;
+    color: var(--text-muted); cursor: pointer; transition: border-color 0.15s;
+    display: inline-block; margin-top: 0.2rem;
+  }
+  .replace-add-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .replace-info {
+    font-size: 0.75rem; color: #bbb; margin-top: 0.4rem; line-height: 1.5;
+  }
+
+  /* === 입력 === */
   .input-section label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.6rem;
+    display: block; font-size: 0.85rem; font-weight: 600;
+    color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.05em; margin-bottom: 0.6rem;
   }
 
   textarea {
-    width: 100%;
-    min-height: 220px;
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem;
-    color: var(--text);
-    font-size: 0.92rem;
-    line-height: 1.7;
-    resize: vertical;
-    outline: none;
-    font-family: inherit;
+    width: 100%; min-height: 220px; background: var(--surface-alt);
+    border: 1px solid var(--border); border-radius: 10px; padding: 1rem;
+    color: var(--text); font-size: 0.92rem; line-height: 1.7;
+    resize: vertical; outline: none; font-family: inherit;
   }
-
   textarea:focus { border-color: var(--accent); }
   textarea::placeholder { color: #bbb; font-size: 0.85rem; }
 
   /* === 버튼 === */
-  .btn-group {
-    display: flex;
-    gap: 0.7rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  .btn-group { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
 
   .btn {
-    padding: 0.7rem 1.8rem;
-    border: none;
-    border-radius: 10px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
+    padding: 0.7rem 1.8rem; border: none; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 600; cursor: pointer;
     transition: background 0.2s, transform 0.1s;
   }
-
   .btn:active { transform: scale(0.97); }
   .btn-edit { background: var(--accent); color: #fff; }
   .btn-edit:hover { background: var(--accent-hover); }
@@ -210,298 +180,179 @@
   .btn-convert:disabled, .btn-chapter:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .btn-small {
-    background: var(--accent);
-    border: none;
-    color: #fff;
-    padding: 0.45rem 0.9rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.82rem;
-    font-weight: 600;
-    transition: background 0.15s;
+    background: var(--accent); border: none; color: #fff;
+    padding: 0.45rem 0.9rem; border-radius: 8px; cursor: pointer;
+    font-size: 0.82rem; font-weight: 600; transition: background 0.15s;
   }
-
   .btn-small:hover { background: var(--accent-hover); }
 
-  /* === 챕터 리스트 === */
+  /* === 챕터 === */
   .chapter-list { display: none; }
   .chapter-list.active { display: block; }
 
   .chapter-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.6rem 0.9rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.88rem;
-    cursor: pointer;
-    transition: background 0.15s;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface-alt); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.6rem 0.9rem; margin-bottom: 0.5rem;
+    font-size: 0.88rem; cursor: pointer; transition: background 0.15s;
   }
-
   .chapter-item:hover { background: #f3eef8; }
   .chapter-item.selected { border-color: var(--accent); background: #f3eef8; }
   .chapter-item-name { font-weight: 600; flex: 1; }
 
-  .chapter-item-actions {
-    display: flex;
-    gap: 0.3rem;
-  }
-
+  .chapter-item-actions { display: flex; gap: 0.3rem; }
   .chapter-item-actions button {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 0.85rem;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
+    background: none; border: none; color: var(--text-muted); cursor: pointer;
+    font-size: 0.85rem; padding: 0.2rem 0.4rem; border-radius: 4px;
     transition: color 0.15s, background 0.15s;
   }
-
   .chapter-item-actions button:hover { color: #e74c3c; background: rgba(231,76,60,0.08); }
   .chapter-item-actions .edit-chapter-btn:hover { color: var(--accent-hover); background: rgba(201,160,220,0.1); }
 
   /* === 미리보기 === */
   .preview-section { display: none; }
   .preview-section.active { display: block; }
+  .preview-hint { font-size: 0.78rem; color: #bbb; margin-bottom: 0.6rem; }
 
-  .preview-hint {
-    font-size: 0.78rem;
-    color: #bbb;
-    margin-bottom: 0.6rem;
-  }
-
-  .preview-body {
-    line-height: 2;
-    font-size: 1rem;
-  }
+  .preview-body { line-height: 2; font-size: 1rem; }
 
   .preview-body .line {
-    padding: 0.15rem 0.3rem;
-    border-radius: 4px;
-    cursor: default;
-    transition: background 0.15s;
-    display: block;
-    margin-bottom: 0.2rem;
+    padding: 0.15rem 0.3rem; border-radius: 4px; cursor: default;
+    transition: background 0.15s; display: block; margin-bottom: 0.2rem;
   }
-
   .preview-body .line-narration { color: #3a3a3a; }
-
-  .preview-body .line-dialogue {
-    cursor: pointer;
-    padding-left: 0.4rem;
-  }
-
+  .preview-body .line-dialogue { cursor: pointer; padding-left: 0.4rem; }
   .preview-body .line-dialogue:hover { background: rgba(0,0,0,0.03); }
-
   .preview-body .line-dialogue.selected-line {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
-    border-radius: 4px;
+    outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 4px;
   }
-
-  .preview-body .line-monologue {
-    font-style: italic;
-  }
-
+  .preview-body .line-monologue { font-style: italic; }
   .preview-body .chapter-heading {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin: 1rem 0 0.5rem 0;
-    padding-bottom: 0.3rem;
-    border-bottom: 2px solid var(--border);
+    font-size: 1.05rem; font-weight: 700; margin: 1rem 0 0.5rem 0;
+    padding-bottom: 0.3rem; border-bottom: 2px solid var(--border);
   }
 
-  /* === 멀티셀렉트 도구 === */
+  /* === 멀티셀렉트 === */
   .multi-toolbar {
-    display: none;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1rem;
-    background: #f3eef8;
-    border: 1px solid var(--accent);
-    border-radius: 10px;
-    margin-bottom: 0.8rem;
-    flex-wrap: wrap;
+    display: none; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1rem; background: #f3eef8;
+    border: 1px solid var(--accent); border-radius: 10px;
+    margin-bottom: 0.8rem; flex-wrap: wrap;
   }
-
   .multi-toolbar.active { display: flex; }
-
-  .multi-toolbar span {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-  }
+  .multi-toolbar span { font-size: 0.85rem; color: var(--text-muted); }
 
   .multi-toolbar .multi-color-btn {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    border: 2px solid transparent;
-    cursor: pointer;
+    width: 28px; height: 28px; border-radius: 6px;
+    border: 2px solid transparent; cursor: pointer;
     transition: border-color 0.15s, transform 0.1s;
   }
-
-  .multi-toolbar .multi-color-btn:hover {
-    border-color: var(--accent);
-    transform: scale(1.12);
-  }
+  .multi-toolbar .multi-color-btn:hover { border-color: var(--accent); transform: scale(1.12); }
 
   .multi-toolbar .multi-reset-btn {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    background: var(--surface-alt);
-    border: 2px dashed var(--border);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    color: var(--text-muted);
+    width: 28px; height: 28px; border-radius: 6px;
+    background: var(--surface-alt); border: 2px dashed var(--border);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; color: var(--text-muted);
   }
 
   .multi-toolbar .multi-clear-btn {
-    margin-left: auto;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    cursor: pointer;
+    margin-left: auto; background: none; border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.78rem;
+    color: var(--text-muted); cursor: pointer;
   }
-
   .multi-toolbar .multi-clear-btn:hover { border-color: #e74c3c; color: #e74c3c; }
 
-  /* === 색상 선택 팝업 === */
-  .color-popup {
-    position: fixed;
-    display: none;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.5rem;
-    gap: 0.4rem;
-    z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-    flex-wrap: wrap;
-    max-width: 220px;
+  /* === 선택 모드 토글 (모바일) === */
+  .select-mode-toggle {
+    display: none; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
+  .select-mode-toggle label {
+    font-size: 0.82rem; color: var(--text-muted); cursor: pointer;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+
+  .toggle-switch {
+    position: relative; width: 40px; height: 22px;
+    background: var(--border); border-radius: 11px; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .toggle-switch.on { background: var(--accent); }
+  .toggle-switch::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 18px; height: 18px; background: #fff; border-radius: 50%;
+    transition: left 0.2s;
+  }
+  .toggle-switch.on::after { left: 20px; }
+
+  @media (max-width: 768px) {
+    .select-mode-toggle { display: flex; }
+  }
+
+  /* === 팝업 === */
+  .color-popup {
+    position: fixed; display: none; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 10px; padding: 0.5rem;
+    gap: 0.4rem; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    flex-wrap: wrap; max-width: 220px;
+  }
   .color-popup.show { display: flex; }
 
   .color-popup-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    border: 2px solid transparent;
-    cursor: pointer;
+    width: 32px; height: 32px; border-radius: 6px;
+    border: 2px solid transparent; cursor: pointer;
     transition: border-color 0.15s, transform 0.1s;
   }
-
   .color-popup-btn:hover { border-color: var(--accent); transform: scale(1.12); }
-
   .color-popup-btn.reset-btn {
-    background: var(--surface-alt);
-    border: 2px dashed var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    background: var(--surface-alt); border: 2px dashed var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; color: var(--text-muted);
   }
 
   /* === 범례 === */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 0.8rem;
-  }
-
-  .legend-icon {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-    display: inline-block;
-    border: 1px solid rgba(0,0,0,0.06);
-  }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.6rem; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; }
+  .legend-icon { width: 12px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid rgba(0,0,0,0.06); }
 
   /* === 토스트 === */
   .toast {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
+    position: fixed; bottom: 2rem; left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background: var(--accent);
-    color: #fff;
-    padding: 0.7rem 1.5rem;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
-    pointer-events: none;
-    z-index: 2000;
+    background: var(--accent); color: #fff; padding: 0.7rem 1.5rem;
+    border-radius: 10px; font-size: 0.9rem; font-weight: 500;
+    opacity: 0; transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none; z-index: 2000;
     box-shadow: 0 4px 16px rgba(201,160,220,0.3);
   }
-
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* === 모달 === */
   .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.25);
-    z-index: 3000;
-    display: none;
-    align-items: center;
-    justify-content: center;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.25); z-index: 3000;
+    display: none; align-items: center; justify-content: center;
   }
-
   .modal-overlay.show { display: flex; }
 
   .modal {
-    background: var(--surface);
-    border-radius: 14px;
-    padding: 1.5rem;
-    width: 90%;
-    max-width: 420px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    background: var(--surface); border-radius: 14px; padding: 1.5rem;
+    width: 90%; max-width: 420px; box-shadow: 0 8px 40px rgba(0,0,0,0.15);
   }
-
   .modal h3 { font-size: 1rem; margin-bottom: 0.8rem; color: var(--text); }
-
   .modal input[type="text"] {
-    width: 100%;
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.5rem 0.7rem;
-    font-size: 0.9rem;
-    color: var(--text);
-    outline: none;
-    margin-bottom: 1rem;
+    width: 100%; background: var(--surface-alt); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.5rem 0.7rem; font-size: 0.9rem;
+    color: var(--text); outline: none; margin-bottom: 1rem;
   }
-
   .modal input[type="text"]:focus { border-color: var(--accent); }
 
   .modal-btns { display: flex; gap: 0.5rem; justify-content: flex-end; }
-
   .modal-btns button {
-    padding: 0.45rem 1.2rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
+    padding: 0.45rem 1.2rem; border: none; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
   }
-
   .modal-btns .modal-cancel { background: var(--surface-alt); color: var(--text-muted); }
   .modal-btns .modal-confirm { background: var(--accent); color: #fff; }
 
@@ -510,6 +361,7 @@
     .container { gap: 1rem; }
     .btn { padding: 0.6rem 1.2rem; font-size: 0.88rem; }
     textarea { min-height: 180px; }
+    .settings-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -533,17 +385,50 @@
   <!-- 스타일 설정 -->
   <div class="panel">
     <div class="panel-title">스타일 설정</div>
-    <div class="settings-row">
-      <label>독백 글자색 <input type="color" id="monologueColorInput" value="#aaaaaa"></label>
-      <label>챕터 제목색 <input type="color" id="chapterColorInput" value="#b07cc8"></label>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <span>내레이션 색</span>
+        <input type="color" id="narrationColorInput" value="#3a3a3a">
+      </div>
+      <div class="setting-item">
+        <span>독백 색</span>
+        <input type="color" id="monologueColorInput" value="#aaaaaa">
+      </div>
+      <div class="setting-item">
+        <span>챕터 제목색</span>
+        <input type="color" id="chapterColorInput" value="#b07cc8">
+      </div>
+      <div class="setting-item">
+        <span>글자 크기</span>
+        <input type="range" id="fontSizeInput" min="12" max="24" value="16" step="1">
+        <span class="range-val" id="fontSizeVal">16px</span>
+      </div>
+      <div class="setting-item">
+        <span>자간</span>
+        <input type="range" id="letterSpacingInput" min="-1" max="5" value="0" step="0.5">
+        <span class="range-val" id="letterSpacingVal">0px</span>
+      </div>
+      <div class="setting-item">
+        <span>행간</span>
+        <input type="range" id="lineHeightInput" min="1.2" max="3.5" value="1.9" step="0.1">
+        <span class="range-val" id="lineHeightVal">1.9</span>
+      </div>
     </div>
   </div>
 
+  <!-- 단어 치환 -->
+  <div class="panel">
+    <div class="panel-title">단어 치환</div>
+    <div id="replacePairs"></div>
+    <button class="replace-add-btn" id="addReplaceBtn">+ 치환 규칙 추가</button>
+    <div class="replace-info">한국어 조사를 자동 변환합니다 (은/는, 이/가, 을/를, 과/와, 아/야, 으로/로, 이나/나, 이란/란, 이든/든)</div>
+  </div>
+
   <!-- 입력 -->
-    <div class="panel input-section">
+  <div class="panel input-section">
     <label for="novelInput">소설 전문 입력</label>
     <textarea id="novelInput" placeholder="&quot;안녕&quot;
-&quot;안녕&quot;
+"안녕"
 「안녕」
 **깡캐:** 안녕
 **깡캐**: 안녕
@@ -554,7 +439,6 @@
 '안녕'
 위의 형식을 독백으로 처리합니다."></textarea>
   </div>
-
 
   <!-- 버튼 -->
   <div class="btn-group">
@@ -572,12 +456,18 @@
   <!-- 미리보기 -->
   <div class="panel preview-section" id="previewSection">
     <div class="panel-title">미리보기</div>
-    <div class="preview-hint">대사를 클릭하여 형광펜 색상을 지정하세요 · Shift+클릭으로 여러 대사를 선택한 뒤 일괄 적용할 수 있습니다</div>
+    <div class="preview-hint">대사를 클릭하여 형광펜 색상을 지정하세요 · Shift+클릭 또는 선택 모드로 여러 대사를 선택할 수 있습니다</div>
+    <div class="select-mode-toggle" id="selectModeToggle">
+      <label>
+        <div class="toggle-switch" id="toggleSwitch"></div>
+        <span>다중 선택 모드</span>
+      </label>
+    </div>
     <div class="legend" id="legendArea"></div>
     <div class="multi-toolbar" id="multiToolbar">
       <span id="multiCount">0개 선택</span>
       <span>→</span>
-      <div id="multiColorBtns"></div>
+      <div id="multiColorBtns" style="display:flex;gap:0.3rem;flex-wrap:wrap;"></div>
       <button class="multi-clear-btn" id="multiClearBtn">선택 해제</button>
     </div>
     <div class="preview-body" id="previewBody"></div>
@@ -585,10 +475,8 @@
 
 </div>
 
-<!-- 색상 선택 팝업 (단일 클릭) -->
+<!-- 팝업 -->
 <div class="color-popup" id="colorPopup"></div>
-
-<!-- 토스트 -->
 <div class="toast" id="toast"></div>
 
 <!-- 모달 -->
@@ -606,440 +494,469 @@
 <script>
 (function() {
 
-  /* ===== STATE ===== */
-  const highlightColors = [];
-  const chapters = [];
-  let currentEditingChapter = -1;
-  const selectedDialogues = new Set(); // "chIdx-lineIdx"
+const $ = id => document.getElementById(id);
+const highlightColors = [];
+const chapters = [];
+const replacePairs = [];
+let currentEditingChapter = -1;
+const selectedDialogues = new Set();
+let selectMode = false;
 
-  /* ===== DOM ===== */
-  const $ = id => document.getElementById(id);
-  const colorList = $('colorList');
-  const colorValueInput = $('colorValueInput');
-  const addColorBtn = $('addColorBtn');
-  const novelInput = $('novelInput');
-  const editBtn = $('editBtn');
-  const chapterAddBtn = $('chapterAddBtn');
-  const convertBtn = $('convertBtn');
-  const previewSection = $('previewSection');
-  const previewBody = $('previewBody');
-  const colorPopup = $('colorPopup');
-  const legendArea = $('legendArea');
-  const chapterListEl = $('chapterList');
-  const chapterItemsEl = $('chapterItems');
-  const monologueColorInput = $('monologueColorInput');
-  const chapterColorInput = $('chapterColorInput');
-  const multiToolbar = $('multiToolbar');
-  const multiCount = $('multiCount');
-  const multiColorBtns = $('multiColorBtns');
-  const multiClearBtn = $('multiClearBtn');
+// DOM
+const colorList = $('colorList'), colorValueInput = $('colorValueInput'), addColorBtn = $('addColorBtn');
+const novelInput = $('novelInput'), editBtn = $('editBtn'), chapterAddBtn = $('chapterAddBtn'), convertBtn = $('convertBtn');
+const previewSection = $('previewSection'), previewBody = $('previewBody');
+const colorPopup = $('colorPopup'), legendArea = $('legendArea');
+const chapterListEl = $('chapterList'), chapterItemsEl = $('chapterItems');
+const narrationColorInput = $('narrationColorInput');
+const monologueColorInput = $('monologueColorInput');
+const chapterColorInput = $('chapterColorInput');
+const fontSizeInput = $('fontSizeInput'), fontSizeVal = $('fontSizeVal');
+const letterSpacingInput = $('letterSpacingInput'), letterSpacingVal = $('letterSpacingVal');
+const lineHeightInput = $('lineHeightInput'), lineHeightVal = $('lineHeightVal');
+const multiToolbar = $('multiToolbar'), multiCount = $('multiCount');
+const multiColorBtns = $('multiColorBtns'), multiClearBtn = $('multiClearBtn');
+const toggleSwitch = $('toggleSwitch');
+const replacePairsEl = $('replacePairs'), addReplaceBtn = $('addReplaceBtn');
 
-  const chapterModal = $('chapterModal');
-  const chapterModalTitle = $('chapterModalTitle');
-  const chapterNameInput = $('chapterNameInput');
-  const chapterModalCancel = $('chapterModalCancel');
-  const chapterModalConfirm = $('chapterModalConfirm');
-  let modalCallback = null;
+const chapterModal = $('chapterModal'), chapterModalTitle = $('chapterModalTitle');
+const chapterNameInput = $('chapterNameInput');
+const chapterModalCancel = $('chapterModalCancel'), chapterModalConfirm = $('chapterModalConfirm');
+let modalCallback = null;
 
-  /* ===== DEFAULT COLORS ===== */
-  [
-    '#f8b4c8', '#fef3a7', '#c8e6b2',
-    '#a8d8ea', '#d4b5e0', '#d5d5d5'
-  ].forEach(v => highlightColors.push({ value: v }));
-  renderColors();
+// === DEFAULTS ===
+['#f8b4c8','#fef3a7','#c8e6b2','#a8d8ea','#d4b5e0','#d5d5d5'].forEach(v => highlightColors.push({value:v}));
+renderColors();
 
-  /* ===== COLOR MANAGEMENT ===== */
-  function renderColors() {
-    colorList.innerHTML = '';
-    highlightColors.forEach((c, i) => {
-      const chip = document.createElement('div');
-      chip.className = 'color-chip';
-      chip.innerHTML = `<span class="swatch" style="background:${c.value}"></span><button class="remove-color" data-idx="${i}">&times;</button>`;
-      colorList.appendChild(chip);
-    });
-    colorList.querySelectorAll('.remove-color').forEach(btn =>
-      btn.addEventListener('click', () => { highlightColors.splice(parseInt(btn.dataset.idx), 1); renderColors(); renderMultiToolbar(); })
-    );
-    renderLegend();
-    renderMultiToolbar();
-  }
+// === COLORS ===
+function renderColors() {
+  colorList.innerHTML = '';
+  highlightColors.forEach((c,i) => {
+    const chip = document.createElement('div');
+    chip.className = 'color-chip';
+    chip.innerHTML = `<span class="swatch" style="background:${c.value}"></span><button class="remove-color" data-idx="${i}">&times;</button>`;
+    colorList.appendChild(chip);
+  });
+  colorList.querySelectorAll('.remove-color').forEach(b => b.addEventListener('click', () => { highlightColors.splice(+b.dataset.idx,1); renderColors(); renderMultiToolbar(); }));
+  renderLegend(); renderMultiToolbar();
+}
 
-  function renderLegend() {
-    legendArea.innerHTML = '';
-    highlightColors.forEach(c => {
-      const s = document.createElement('span');
-      s.innerHTML = `<span class="legend-icon" style="background:${c.value}"></span>`;
-      legendArea.appendChild(s);
-    });
-  }
+function renderLegend() {
+  legendArea.innerHTML = '';
+  highlightColors.forEach(c => { const s = document.createElement('span'); s.innerHTML = `<span class="legend-icon" style="background:${c.value}"></span>`; legendArea.appendChild(s); });
+}
 
-  addColorBtn.addEventListener('click', () => {
-    highlightColors.push({ value: colorValueInput.value });
-    renderColors();
+addColorBtn.addEventListener('click', () => { highlightColors.push({value:colorValueInput.value}); renderColors(); });
+
+// === STYLE SETTINGS ===
+fontSizeInput.addEventListener('input', () => { fontSizeVal.textContent = fontSizeInput.value+'px'; renderFullPreview(); });
+letterSpacingInput.addEventListener('input', () => { letterSpacingVal.textContent = letterSpacingInput.value+'px'; renderFullPreview(); });
+lineHeightInput.addEventListener('input', () => { lineHeightVal.textContent = lineHeightInput.value; renderFullPreview(); });
+narrationColorInput.addEventListener('input', renderFullPreview);
+monologueColorInput.addEventListener('input', renderFullPreview);
+chapterColorInput.addEventListener('input', renderFullPreview);
+
+// === TOGGLE SELECT MODE (MOBILE) ===
+toggleSwitch.addEventListener('click', () => {
+  selectMode = !selectMode;
+  toggleSwitch.classList.toggle('on', selectMode);
+  if (!selectMode) clearSelection();
+});
+
+// === WORD REPLACEMENT ===
+function addReplacePair(from='', to='') {
+  replacePairs.push({from, to});
+  renderReplacePairs();
+}
+
+function renderReplacePairs() {
+  replacePairsEl.innerHTML = '';
+  replacePairs.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'replace-pair';
+    row.innerHTML = `<input type="text" value="${esc(p.from)}" placeholder="원래 단어" data-idx="${i}" data-field="from"><span class="arrow">→</span><input type="text" value="${esc(p.to)}" placeholder="바꿀 단어" data-idx="${i}" data-field="to"><button data-idx="${i}">&times;</button>`;
+    replacePairsEl.appendChild(row);
+  });
+  replacePairsEl.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', () => { replacePairs[+inp.dataset.idx][inp.dataset.field] = inp.value; });
+  });
+  replacePairsEl.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => { replacePairs.splice(+b.dataset.idx,1); renderReplacePairs(); });
+  });
+}
+
+addReplaceBtn.addEventListener('click', () => addReplacePair());
+
+// === KOREAN JOSA ===
+function hasJongseong(ch) {
+  if (!ch) return false;
+  const code = ch.charCodeAt(0);
+  if (code < 0xAC00 || code > 0xD7A3) return false;
+  return (code - 0xAC00) % 28 !== 0;
+}
+
+function fixJosa(text, oldWord, newWord) {
+  const lastCharNew = newWord[newWord.length - 1];
+  const jongNew = hasJongseong(lastCharNew);
+
+  const josaMap = [
+    { with: '은', without: '는' },
+    { with: '이', without: '가' },
+    { with: '을', without: '를' },
+    { with: '과', without: '와' },
+    { with: '아', without: '야' },
+    { with: '으로', without: '로' },
+    { with: '이나', without: '나' },
+    { with: '이란', without: '란' },
+    { with: '이든', without: '든' },
+    { with: '이에요', without: '예요' },
+    { with: '이었', without: '였' },
+  ];
+
+  let result = text;
+
+  josaMap.forEach(j => {
+    // oldWord + 종성용 조사 → newWord + 적절한 조사
+    const regWith = new RegExp(escRegex(oldWord) + escRegex(j.with), 'g');
+    const regWithout = new RegExp(escRegex(oldWord) + escRegex(j.without), 'g');
+    const correctJosa = jongNew ? j.with : j.without;
+
+    result = result.replace(regWith, newWord + correctJosa);
+    result = result.replace(regWithout, newWord + correctJosa);
   });
 
-  /* ===== STYLE SETTINGS LIVE UPDATE ===== */
-  monologueColorInput.addEventListener('input', renderFullPreview);
-  chapterColorInput.addEventListener('input', renderFullPreview);
+  // 나머지 단순 치환
+  const regPlain = new RegExp(escRegex(oldWord), 'g');
+  result = result.replace(regPlain, newWord);
 
-  /* ===== PARSING ===== */
-  function classifyLine(raw) {
-    const t = raw.trim();
-    if (!t) return { type: 'empty', original: raw };
-    if (/^###\s+/.test(t)) return { type: 'heading', original: raw, headingText: t.replace(/^###\s+/, '') };
+  return result;
+}
 
-    // monologue: *text* (single asterisk, not **)
-    if (/^\*[^*].*[^*]\*$/.test(t) && !t.startsWith('**')) return { type: 'monologue', original: raw };
-    // monologue: (text)
-    if (/^\(.*\)$/.test(t)) return { type: 'monologue', original: raw };
-    // monologue: 'text' or 'text'
-    if (/^[''].*['']$/.test(t)) return { type: 'monologue', original: raw };
+function escRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
-    // dialogue: 「...」
-    if (/^「.*」$/.test(t)) return { type: 'dialogue', original: raw, highlightColor: null };
-    // dialogue: "..." "..." "..."
-    if (/^[""\u201C].*[""\u201D]$/.test(t)) return { type: 'dialogue', original: raw, highlightColor: null };
-    // dialogue: **name**: text
-    if (/^\*\*[^*]+\*\*\s*[:：]/.test(t)) return { type: 'dialogue', original: raw, highlightColor: null };
-
-    return { type: 'narration', original: raw };
-  }
-
-  function parseText(text) { return text.split('\n').map(classifyLine); }
-
-  function splitByHeadings(arr) {
-    const result = [];
-    let cur = null;
-    arr.forEach(item => {
-      if (item.type === 'heading') {
-        if (cur) result.push(cur);
-        cur = { name: item.headingText, lineData: [] };
-      } else {
-        if (!cur) cur = { name: '챕터 ' + (result.length + 1), lineData: [] };
-        cur.lineData.push(item);
-      }
-    });
-    if (cur && cur.lineData.length) result.push(cur);
-    return result;
-  }
-
-  /* ===== EDIT BUTTON ===== */
-  editBtn.addEventListener('click', () => {
-    const text = novelInput.value;
-    if (!text.trim()) return;
-    const allLines = parseText(text);
-
-    if (allLines.some(l => l.type === 'heading')) {
-      splitByHeadings(allLines).forEach(ch => chapters.push(ch));
-      novelInput.value = '';
-    } else if (currentEditingChapter >= 0 && currentEditingChapter < chapters.length) {
-      chapters[currentEditingChapter].lineData = allLines.filter(l => l.type !== 'heading');
-    } else {
-      if (chapters.length === 0) chapters.push({ name: '챕터 1', lineData: allLines });
-      else chapters[0].lineData = allLines;
+function applyReplacements(text) {
+  let result = text;
+  replacePairs.forEach(p => {
+    if (p.from && p.to) {
+      result = fixJosa(result, p.from, p.to);
     }
+  });
+  return result;
+}
 
+// === PARSING ===
+function classifyLine(raw) {
+  const t = raw.trim();
+  if (!t) return {type:'empty', original:raw};
+  if (/^###\s+/.test(t)) return {type:'heading', original:raw, headingText:t.replace(/^###\s+/,'')};
+
+  // monologue
+  if (/^\*[^*].*[^*]\*$/.test(t) && !t.startsWith('**')) return {type:'monologue', original:raw};
+  if (/^\(.*\)$/.test(t)) return {type:'monologue', original:raw};
+  if (/^[''].*['']$/.test(t)) return {type:'monologue', original:raw};
+
+  // dialogue: **name**: text (check BEFORE 「」 and quotes)
+  if (/^\*\*[^*]+\*\*\s*[:：]/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+
+  // dialogue: 「...」
+  if (/^「.*」$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+
+  // dialogue: various quotes
+  if (/^".*"$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  if (/^\u201C.*\u201D$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  if (/^\u201C.*"$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  if (/^".*\u201D$/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+
+  return {type:'narration', original:raw};
+}
+
+function parseText(text) { return text.split('\n').map(classifyLine); }
+
+function splitByHeadings(arr) {
+  const res = []; let cur = null;
+  arr.forEach(item => {
+    if (item.type === 'heading') { if (cur) res.push(cur); cur = {name:item.headingText, lineData:[]}; }
+    else { if (!cur) cur = {name:'챕터 '+(res.length+1), lineData:[]}; cur.lineData.push(item); }
+  });
+  if (cur && cur.lineData.length) res.push(cur);
+  return res;
+}
+
+// === EDIT ===
+editBtn.addEventListener('click', () => {
+  const text = novelInput.value;
+  if (!text.trim()) return;
+
+  const processed = applyReplacements(text);
+  const allLines = parseText(processed);
+
+  if (allLines.some(l => l.type === 'heading')) {
+    splitByHeadings(allLines).forEach(ch => chapters.push(ch));
+    novelInput.value = '';
+  } else if (currentEditingChapter >= 0 && currentEditingChapter < chapters.length) {
+    chapters[currentEditingChapter].lineData = allLines.filter(l => l.type !== 'heading');
+  } else {
+    if (!chapters.length) chapters.push({name:'챕터 1', lineData:allLines});
+    else chapters[0].lineData = allLines;
+  }
+
+  clearSelection();
+  renderChapterList();
+  renderFullPreview();
+  previewSection.classList.add('active');
+  convertBtn.disabled = false;
+});
+
+// === CHAPTER ADD ===
+chapterAddBtn.addEventListener('click', () => {
+  const text = novelInput.value;
+  if (!text.trim()) return;
+  const processed = applyReplacements(text);
+  const filtered = parseText(processed).filter(l => l.type !== 'heading');
+  if (!filtered.length) return;
+
+  openModal('챕터 이름 입력', '챕터 '+(chapters.length+1), name => {
+    chapters.push({name, lineData:filtered});
+    novelInput.value = '';
     clearSelection();
     renderChapterList();
     renderFullPreview();
     previewSection.classList.add('active');
     convertBtn.disabled = false;
   });
+});
 
-  /* ===== CHAPTER ADD ===== */
-  chapterAddBtn.addEventListener('click', () => {
-    const text = novelInput.value;
-    if (!text.trim()) return;
-    const filtered = parseText(text).filter(l => l.type !== 'heading');
-    if (!filtered.length) return;
+// === MODAL ===
+function openModal(title, def, cb) {
+  chapterModalTitle.textContent = title;
+  chapterNameInput.value = def;
+  modalCallback = cb;
+  chapterModal.classList.add('show');
+  setTimeout(() => chapterNameInput.focus(), 100);
+}
+function closeModal() { chapterModal.classList.remove('show'); modalCallback = null; }
+chapterModalCancel.addEventListener('click', closeModal);
+chapterModalConfirm.addEventListener('click', () => { if (modalCallback) modalCallback(chapterNameInput.value.trim()||'무제'); closeModal(); });
+chapterNameInput.addEventListener('keydown', e => { if (e.key==='Enter') chapterModalConfirm.click(); });
+chapterModal.addEventListener('click', e => { if (e.target===chapterModal) closeModal(); });
 
-    openModal('챕터 이름 입력', '챕터 ' + (chapters.length + 1), name => {
-      chapters.push({ name, lineData: filtered });
-      novelInput.value = '';
-      clearSelection();
+// === CHAPTER LIST ===
+function renderChapterList() {
+  if (!chapters.length) { chapterListEl.classList.remove('active'); return; }
+  chapterListEl.classList.add('active');
+  chapterItemsEl.innerHTML = '';
+  chapters.forEach((ch,i) => {
+    const item = document.createElement('div');
+    item.className = 'chapter-item'+(currentEditingChapter===i?' selected':'');
+    item.innerHTML = `<span class="chapter-item-name">${i+1}. ${esc(ch.name)}</span><span style="font-size:0.75rem;color:#bbb;margin-right:0.5rem;">${ch.lineData.length}줄</span><div class="chapter-item-actions"><button class="edit-chapter-btn" data-idx="${i}">✎</button><button class="delete-chapter-btn" data-idx="${i}">✕</button></div>`;
+    item.addEventListener('click', e => {
+      if (e.target.closest('.chapter-item-actions')) return;
+      currentEditingChapter = i;
+      novelInput.value = ch.lineData.map(l => l.original).join('\n');
       renderChapterList();
-      renderFullPreview();
-      previewSection.classList.add('active');
-      convertBtn.disabled = false;
     });
+    chapterItemsEl.appendChild(item);
   });
+  chapterItemsEl.querySelectorAll('.edit-chapter-btn').forEach(b => b.addEventListener('click', e => {
+    e.stopPropagation(); const idx=+b.dataset.idx;
+    openModal('챕터 이름 수정', chapters[idx].name, name => { chapters[idx].name=name; renderChapterList(); renderFullPreview(); });
+  }));
+  chapterItemsEl.querySelectorAll('.delete-chapter-btn').forEach(b => b.addEventListener('click', e => {
+    e.stopPropagation(); chapters.splice(+b.dataset.idx,1);
+    if (currentEditingChapter>=chapters.length) currentEditingChapter=chapters.length-1;
+    clearSelection(); renderChapterList(); renderFullPreview();
+    if (!chapters.length) { previewSection.classList.remove('active'); convertBtn.disabled=true; }
+  }));
+}
 
-  /* ===== MODAL ===== */
-  function openModal(title, def, cb) {
-    chapterModalTitle.textContent = title;
-    chapterNameInput.value = def;
-    modalCallback = cb;
-    chapterModal.classList.add('show');
-    setTimeout(() => chapterNameInput.focus(), 100);
-  }
-  function closeModal() { chapterModal.classList.remove('show'); modalCallback = null; }
-  chapterModalCancel.addEventListener('click', closeModal);
-  chapterModalConfirm.addEventListener('click', () => {
-    if (modalCallback) modalCallback(chapterNameInput.value.trim() || '무제');
-    closeModal();
+// === MULTI-SELECT ===
+function selKey(c,l) { return c+'-'+l; }
+
+function clearSelection() {
+  selectedDialogues.clear();
+  document.querySelectorAll('.selected-line').forEach(el => el.classList.remove('selected-line'));
+  updateMultiToolbar();
+}
+
+function toggleSelection(chIdx, lineIdx, el) {
+  const key = selKey(chIdx, lineIdx);
+  if (selectedDialogues.has(key)) { selectedDialogues.delete(key); el.classList.remove('selected-line'); }
+  else { selectedDialogues.add(key); el.classList.add('selected-line'); }
+  updateMultiToolbar();
+}
+
+function updateMultiToolbar() {
+  if (selectedDialogues.size > 0) { multiToolbar.classList.add('active'); multiCount.textContent = selectedDialogues.size+'개 선택'; }
+  else multiToolbar.classList.remove('active');
+}
+
+function renderMultiToolbar() {
+  multiColorBtns.innerHTML = '';
+  highlightColors.forEach(c => {
+    const btn = document.createElement('button'); btn.className='multi-color-btn'; btn.style.background=c.value;
+    btn.addEventListener('click', () => applyToSelected(c.value));
+    multiColorBtns.appendChild(btn);
   });
-  chapterNameInput.addEventListener('keydown', e => { if (e.key === 'Enter') chapterModalConfirm.click(); });
-  chapterModal.addEventListener('click', e => { if (e.target === chapterModal) closeModal(); });
+  const reset = document.createElement('button'); reset.className='multi-reset-btn'; reset.textContent='✕';
+  reset.addEventListener('click', () => applyToSelected(null));
+  multiColorBtns.appendChild(reset);
+}
 
-  /* ===== CHAPTER LIST ===== */
-  function renderChapterList() {
-    if (!chapters.length) { chapterListEl.classList.remove('active'); return; }
-    chapterListEl.classList.add('active');
-    chapterItemsEl.innerHTML = '';
-    chapters.forEach((ch, i) => {
-      const item = document.createElement('div');
-      item.className = 'chapter-item' + (currentEditingChapter === i ? ' selected' : '');
-      item.innerHTML = `
-        <span class="chapter-item-name">${i + 1}. ${esc(ch.name)}</span>
-        <span style="font-size:0.75rem;color:#bbb;margin-right:0.5rem;">${ch.lineData.length}줄</span>
-        <div class="chapter-item-actions">
-          <button class="edit-chapter-btn" title="이름 수정" data-idx="${i}">✎</button>
-          <button class="delete-chapter-btn" title="삭제" data-idx="${i}">✕</button>
-        </div>`;
-      item.addEventListener('click', e => {
-        if (e.target.closest('.chapter-item-actions')) return;
-        currentEditingChapter = i;
-        novelInput.value = ch.lineData.map(l => l.original).join('\n');
-        renderChapterList();
-      });
-      chapterItemsEl.appendChild(item);
-    });
+function applyToSelected(color) {
+  selectedDialogues.forEach(key => { const [c,l]=key.split('-').map(Number); chapters[c].lineData[l].highlightColor=color; });
+  clearSelection(); renderFullPreview();
+}
 
-    chapterItemsEl.querySelectorAll('.edit-chapter-btn').forEach(btn =>
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        const idx = +btn.dataset.idx;
-        openModal('챕터 이름 수정', chapters[idx].name, name => { chapters[idx].name = name; renderChapterList(); renderFullPreview(); });
-      })
-    );
-    chapterItemsEl.querySelectorAll('.delete-chapter-btn').forEach(btn =>
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        chapters.splice(+btn.dataset.idx, 1);
-        if (currentEditingChapter >= chapters.length) currentEditingChapter = chapters.length - 1;
-        clearSelection();
-        renderChapterList();
-        renderFullPreview();
-        if (!chapters.length) { previewSection.classList.remove('active'); convertBtn.disabled = true; }
-      })
-    );
-  }
+multiClearBtn.addEventListener('click', clearSelection);
 
-  /* ===== MULTI-SELECT ===== */
-  function selKey(ch, ln) { return ch + '-' + ln; }
+// === PREVIEW ===
+function renderFullPreview() {
+  previewBody.innerHTML = '';
+  const monoColor = monologueColorInput.value;
+  const chapColor = chapterColorInput.value;
+  const narrColor = narrationColorInput.value;
+  const fontSize = fontSizeInput.value + 'px';
+  const letterSpacing = letterSpacingInput.value + 'px';
+  const lineHeight = lineHeightInput.value;
 
-  function clearSelection() {
-    selectedDialogues.clear();
-    document.querySelectorAll('.line-dialogue.selected-line').forEach(el => el.classList.remove('selected-line'));
-    updateMultiToolbar();
-  }
+  previewBody.style.fontSize = fontSize;
+  previewBody.style.letterSpacing = letterSpacing;
+  previewBody.style.lineHeight = lineHeight;
 
-  function toggleSelection(chIdx, lineIdx, el) {
-    const key = selKey(chIdx, lineIdx);
-    if (selectedDialogues.has(key)) {
-      selectedDialogues.delete(key);
-      el.classList.remove('selected-line');
-    } else {
-      selectedDialogues.add(key);
-      el.classList.add('selected-line');
-    }
-    updateMultiToolbar();
-  }
+  chapters.forEach((ch, chIdx) => {
+    const heading = document.createElement('div');
+    heading.className = 'chapter-heading';
+    heading.textContent = ch.name;
+    heading.style.color = chapColor;
+    previewBody.appendChild(heading);
 
-  function updateMultiToolbar() {
-    if (selectedDialogues.size > 0) {
-      multiToolbar.classList.add('active');
-      multiCount.textContent = selectedDialogues.size + '개 선택';
-    } else {
-      multiToolbar.classList.remove('active');
-    }
-  }
+    ch.lineData.forEach((item, lineIdx) => {
+      if (item.type === 'empty') { const br = document.createElement('div'); br.style.height='0.5em'; previewBody.appendChild(br); return; }
 
-  function renderMultiToolbar() {
-    multiColorBtns.innerHTML = '';
-    highlightColors.forEach(c => {
-      const btn = document.createElement('button');
-      btn.className = 'multi-color-btn';
-      btn.style.background = c.value;
-      btn.addEventListener('click', () => applyToSelected(c.value));
-      multiColorBtns.appendChild(btn);
-    });
-    const reset = document.createElement('button');
-    reset.className = 'multi-reset-btn';
-    reset.textContent = '✕';
-    reset.addEventListener('click', () => applyToSelected(null));
-    multiColorBtns.appendChild(reset);
-  }
+      const el = document.createElement('div');
+      el.className = 'line';
+      el.dataset.chapter = chIdx;
+      el.dataset.line = lineIdx;
+      const display = esc(item.original.trim());
 
-  function applyToSelected(color) {
-    selectedDialogues.forEach(key => {
-      const [ch, ln] = key.split('-').map(Number);
-      chapters[ch].lineData[ln].highlightColor = color;
-    });
-    clearSelection();
-    renderFullPreview();
-  }
+      if (item.type === 'narration') {
+        el.classList.add('line-narration');
+        el.style.color = narrColor;
+        el.innerHTML = display;
+      } else if (item.type === 'dialogue') {
+        el.classList.add('line-dialogue');
+        el.innerHTML = display;
+        if (item.highlightColor) el.style.background = item.highlightColor+'33';
+        if (selectedDialogues.has(selKey(chIdx,lineIdx))) el.classList.add('selected-line');
 
-  multiClearBtn.addEventListener('click', clearSelection);
-
-  /* ===== PREVIEW ===== */
-  function renderFullPreview() {
-    previewBody.innerHTML = '';
-    const monoColor = monologueColorInput.value;
-    const chapColor = chapterColorInput.value;
-
-    chapters.forEach((ch, chIdx) => {
-      const heading = document.createElement('div');
-      heading.className = 'chapter-heading';
-      heading.textContent = ch.name;
-      heading.style.color = chapColor;
-      previewBody.appendChild(heading);
-
-      ch.lineData.forEach((item, lineIdx) => {
-        if (item.type === 'empty') {
-          const br = document.createElement('div');
-          br.style.height = '0.5em';
-          previewBody.appendChild(br);
-          return;
-        }
-
-        const el = document.createElement('div');
-        el.className = 'line';
-        el.dataset.chapter = chIdx;
-        el.dataset.line = lineIdx;
-        const display = esc(item.original.trim());
-
-        if (item.type === 'narration') {
-          el.classList.add('line-narration');
-          el.innerHTML = display;
-        } else if (item.type === 'dialogue') {
-          el.classList.add('line-dialogue');
-          el.innerHTML = display;
-          if (item.highlightColor) {
-            el.style.background = item.highlightColor + '33';
+        el.addEventListener('click', e => {
+          if (e.shiftKey || selectMode) {
+            e.preventDefault();
+            toggleSelection(chIdx, lineIdx, el);
+          } else if (selectedDialogues.size > 0) {
+            toggleSelection(chIdx, lineIdx, el);
+          } else {
+            openColorPopup(e, chIdx, lineIdx, el);
           }
-          if (selectedDialogues.has(selKey(chIdx, lineIdx))) el.classList.add('selected-line');
-
-          el.addEventListener('click', e => {
-            if (e.shiftKey) {
-              e.preventDefault();
-              toggleSelection(chIdx, lineIdx, el);
-            } else if (selectedDialogues.size > 0) {
-              toggleSelection(chIdx, lineIdx, el);
-            } else {
-              openColorPopup(e, chIdx, lineIdx, el);
-            }
-          });
-        } else if (item.type === 'monologue') {
-          el.classList.add('line-monologue');
-          el.style.color = monoColor;
-          el.innerHTML = display;
-        }
-
-        previewBody.appendChild(el);
-      });
-    });
-
-    renderMultiToolbar();
-  }
-
-  /* ===== SINGLE COLOR POPUP ===== */
-  function openColorPopup(e, chIdx, lineIdx, el) {
-    e.stopPropagation();
-    colorPopup.innerHTML = '';
-
-    highlightColors.forEach(c => {
-      const btn = document.createElement('button');
-      btn.className = 'color-popup-btn';
-      btn.style.background = c.value;
-      btn.addEventListener('click', ev => {
-        ev.stopPropagation();
-        applySingle(chIdx, lineIdx, el, c.value);
-        closePopup();
-      });
-      colorPopup.appendChild(btn);
-    });
-
-    const reset = document.createElement('button');
-    reset.className = 'color-popup-btn reset-btn';
-    reset.textContent = '✕';
-    reset.addEventListener('click', ev => { ev.stopPropagation(); applySingle(chIdx, lineIdx, el, null); closePopup(); });
-    colorPopup.appendChild(reset);
-
-    const rect = el.getBoundingClientRect();
-    let left = e.clientX, top = rect.bottom + 6;
-    if (left + 220 > window.innerWidth) left = window.innerWidth - 230;
-    if (top + 50 > window.innerHeight) top = rect.top - 50;
-    colorPopup.style.left = left + 'px';
-    colorPopup.style.top = top + 'px';
-    colorPopup.classList.add('show');
-  }
-
-  function applySingle(chIdx, lineIdx, el, color) {
-    chapters[chIdx].lineData[lineIdx].highlightColor = color;
-    el.style.background = color ? color + '33' : '';
-  }
-
-  function closePopup() { colorPopup.classList.remove('show'); }
-  document.addEventListener('click', e => { if (!e.target.closest('.color-popup')) closePopup(); });
-
-  /* ===== CONVERT ===== */
-  convertBtn.addEventListener('click', () => {
-    if (!chapters.length) return;
-    copy(generateHtml());
-    showToast('HTML 코드가 클립보드에 복사되었습니다!');
-  });
-
-  function generateHtml() {
-    const monoColor = monologueColorInput.value;
-    const chapColor = chapterColorInput.value;
-    const p = [];
-    const multi = chapters.length > 1;
-
-    p.push(`<div style="max-width:720px!important;margin:0 auto!important;padding:1.5rem!important;font-family:'Noto Sans KR',sans-serif!important;line-height:1.9!important;color:#3a3a3a!important;font-size:1rem!important;word-break:keep-all!important;overflow-wrap:break-word!important;box-sizing:border-box!important;">`);
-
-    chapters.forEach((ch, ci) => {
-      if (multi) {
-        p.push(`<details${ci === 0 ? ' open' : ''}>`);
-        p.push(`<summary style="font-size:1.05rem!important;font-weight:700!important;color:${chapColor}!important;cursor:pointer!important;padding:0.6rem 0!important;border-bottom:2px solid #e4ddd4!important;margin-bottom:0.5rem!important;list-style:none!important;">${esc(ch.name)}</summary>`);
+        });
+      } else if (item.type === 'monologue') {
+        el.classList.add('line-monologue');
+        el.style.color = monoColor;
+        el.innerHTML = display;
       }
 
-      ch.lineData.forEach(item => {
-        if (item.type === 'empty') { p.push('<br>'); return; }
-        const t = esc(item.original.trim());
-        if (item.type === 'narration') {
-          p.push(`<p style="color:#3a3a3a!important;margin:0.4em 0!important;line-height:1.9!important;">${t}</p>`);
-        } else if (item.type === 'dialogue') {
-          if (item.highlightColor) {
-            p.push(`<p style="background:${item.highlightColor}33!important;padding:0.15em 0.4em!important;border-radius:4px!important;margin:0.4em 0!important;line-height:1.9!important;">${t}</p>`);
-          } else {
-            p.push(`<p style="color:#3a3a3a!important;margin:0.4em 0!important;line-height:1.9!important;">${t}</p>`);
-          }
-        } else if (item.type === 'monologue') {
-          p.push(`<p style="color:${monoColor}!important;font-style:italic!important;margin:0.4em 0!important;line-height:1.9!important;">${t}</p>`);
-        }
-      });
-
-      if (multi) p.push('</details>');
+      previewBody.appendChild(el);
     });
+  });
 
-    p.push('</div>');
-    return p.join('\n');
-  }
+  renderMultiToolbar();
+}
 
-  /* ===== UTIL ===== */
-  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+// === POPUP ===
+function openColorPopup(e, chIdx, lineIdx, el) {
+  e.stopPropagation();
+  colorPopup.innerHTML = '';
+  highlightColors.forEach(c => {
+    const btn = document.createElement('button'); btn.className='color-popup-btn'; btn.style.background=c.value;
+    btn.addEventListener('click', ev => { ev.stopPropagation(); applySingle(chIdx,lineIdx,el,c.value); closePopup(); });
+    colorPopup.appendChild(btn);
+  });
+  const reset = document.createElement('button'); reset.className='color-popup-btn reset-btn'; reset.textContent='✕';
+  reset.addEventListener('click', ev => { ev.stopPropagation(); applySingle(chIdx,lineIdx,el,null); closePopup(); });
+  colorPopup.appendChild(reset);
 
-  function copy(text) {
-    if (navigator.clipboard) { navigator.clipboard.writeText(text); return; }
-    const ta = document.createElement('textarea'); ta.value = text;
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-  }
+  const rect = el.getBoundingClientRect();
+  let left=e.clientX, top=rect.bottom+6;
+  if (left+220>window.innerWidth) left=window.innerWidth-230;
+  if (top+50>window.innerHeight) top=rect.top-50;
+  colorPopup.style.left=left+'px'; colorPopup.style.top=top+'px';
+  colorPopup.classList.add('show');
+}
 
-  function showToast(msg) {
-    const t = $('toast'); t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
+function applySingle(chIdx, lineIdx, el, color) {
+  chapters[chIdx].lineData[lineIdx].highlightColor = color;
+  el.style.background = color ? color+'33' : '';
+}
+
+function closePopup() { colorPopup.classList.remove('show'); }
+document.addEventListener('click', e => { if (!e.target.closest('.color-popup')) closePopup(); });
+
+// === CONVERT ===
+convertBtn.addEventListener('click', () => {
+  if (!chapters.length) return;
+  copy(generateHtml());
+  showToast('HTML 코드가 클립보드에 복사되었습니다!');
+});
+
+function generateHtml() {
+  const monoColor = monologueColorInput.value;
+  const chapColor = chapterColorInput.value;
+  const narrColor = narrationColorInput.value;
+  const fontSize = fontSizeInput.value+'px';
+  const letterSpacing = letterSpacingInput.value+'px';
+  const lineHeight = lineHeightInput.value;
+  const multi = chapters.length > 1;
+  const p = [];
+
+  p.push(`<div style="max-width:720px!important;margin:0 auto!important;padding:1.5rem!important;font-family:'Noto Sans KR',sans-serif!important;font-size:${fontSize}!important;letter-spacing:${letterSpacing}!important;line-height:${lineHeight}!important;color:${narrColor}!important;word-break:keep-all!important;overflow-wrap:break-word!important;box-sizing:border-box!important;">`);
+
+  chapters.forEach((ch,ci) => {
+    if (multi) {
+      p.push(`<details${ci===0?' open':''}>`);
+      p.push(`<summary style="font-size:1.05em!important;font-weight:700!important;color:${chapColor}!important;cursor:pointer!important;padding:0.6rem 0!important;border-bottom:2px solid #e4ddd4!important;margin-bottom:0.5rem!important;list-style:none!important;">${esc(ch.name)}</summary>`);
+    }
+    ch.lineData.forEach(item => {
+      if (item.type==='empty') { p.push('<br>'); return; }
+      const t = esc(item.original.trim());
+      if (item.type==='narration') {
+        p.push(`<p style="color:${narrColor}!important;margin:0.4em 0!important;">${t}</p>`);
+      } else if (item.type==='dialogue') {
+        if (item.highlightColor) {
+          p.push(`<p style="background:${item.highlightColor}33!important;padding:0.15em 0.4em!important;border-radius:4px!important;margin:0.4em 0!important;">${t}</p>`);
+        } else {
+          p.push(`<p style="color:${narrColor}!important;margin:0.4em 0!important;">${t}</p>`);
+        }
+      } else if (item.type==='monologue') {
+        p.push(`<p style="color:${monoColor}!important;font-style:italic!important;margin:0.4em 0!important;">${t}</p>`);
+      }
+    });
+    if (multi) p.push('</details>');
+  });
+
+  p.push('</div>');
+  return p.join('\n');
+}
+
+// === UTIL ===
+function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+function copy(text) {
+  if (navigator.clipboard) { navigator.clipboard.writeText(text); return; }
+  const ta=document.createElement('textarea'); ta.value=text;
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+}
+
+function showToast(msg) { const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
 
 })();
 </script>

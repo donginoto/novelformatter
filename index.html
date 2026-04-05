@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>소설 포매터 도구</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f1ea; }
+        .editor { width: 100%; height: 200px; margin-bottom: 10px; }
+        .controls { margin-bottom: 20px; }
+        .preview { border: 1px solid #ccc; padding: 20px; background: white; min-height: 200px; }
+        .narration { color: #1a1a1a; margin-bottom: 10px; }
+        .dialogue { background: rgba(255, 150, 180, 0.3); padding: 2px 4px; border-radius: 3px; display: inline-block; margin-bottom: 10px; }
+        .monologue { font-style: italic; color: #5a8a7a; border-left: 3px solid #5a8a7a; padding-left: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>소설 포매터 (기초형)</h1>
+    <div class="controls">
+        <textarea id="inputText" class="editor" placeholder="여기에 소설 내용을 입력하세요..."></textarea><br>
+        타입 선택: 
+        <button onclick="format('narration')">내레이션</button>
+        <button onclick="format('dialogue')">대사</button>
+        <button onclick="format('monologue')">독백</button>
+    </div>
+    <h2>미리보기</h2>
+    <div id="preview" class="preview"></div>
+
+    <script>
+        function format(type) {
+            const input = document.getElementById('inputText');
+            const preview = document.getElementById('preview');
+            if(!input.value) return;
+
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerText = input.value;
+            
+            preview.appendChild(div);
+            input.value = ''; // 입력창 비우기
+        }
+    </script>
+</body>
+</html>

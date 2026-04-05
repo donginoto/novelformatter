@@ -1,153 +1,725 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소설 자동 포매터 - 하이라이터</title>
-    <style>
-        :root {
-            --bg-color: #f7f5f2;
-            --panel-bg: #ede9e3;
-            --text-main: #1a1a1a;
-        }
-        body { font-family: 'Malgun Gothic', sans-serif; background: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { max-width: 800px; width: 100%; }
-        h1 { text-align: center; font-size: 1.5rem; color: #3a3530; }
-        
-        textarea { width: 100%; height: 200px; padding: 15px; border: 1px solid #c8c0b5; border-radius: 8px; background: white; font-size: 14px; line-height: 1.6; box-sizing: border-box; }
-        
-        .btn-group { margin: 20px 0; display: flex; gap: 10px; justify-content: center; }
-        button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-process { background: #8a7f6e; color: white; }
-        .btn-copy { background: #5a8a7a; color: white; }
-        
-        /* 미리보기 영역 스타일 */
-        #preview { 
-            background: white; padding: 40px; border-radius: 8px; border: 1px solid #e0ddd7; 
-            min-height: 300px; line-height: 1.95; font-size: 15px; white-space: pre-wrap;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소설 HTML 에디터</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --surface-alt: #0f3460;
+    --text: #e0e0e0;
+    --text-muted: #888;
+    --accent: #e94560;
+    --border: #2a2a4a;
+  }
 
-        /* 각 줄 스타일 (클릭 가능) */
-        .line { cursor: pointer; padding: 2px 0; transition: background 0.2s; position: relative; }
-        .line:hover::after { content: ' 🎨 클릭해서 색상 변경'; font-size: 11px; color: #888; position: absolute; right: 0; }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        /* 대사/독백/내레이션 기본 클래스 */
-        .type-narration { color: #1a1a1a; }
-        .type-dialogue { display: inline; border-radius: 3px; padding: 1px 4px; }
-        .type-monologue { font-style: italic; color: #3a6a5a; border-left: 2px solid #5a8a7a; padding-left: 14px; display: block; margin: 10px 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
 
-        /* 색상 팔레트 모달 */
-        #palette { display: none; position: fixed; background: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; }
-        .color-dot { width: 25px; height: 25px; border-radius: 50%; display: inline-block; cursor: pointer; margin: 5px; border: 1px solid #eee; }
-    </style>
+  h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* === 색상 관리 패널 === */
+  .color-manager {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .color-manager-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .color-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .color-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.82rem;
+    cursor: default;
+    transition: opacity 0.2s;
+  }
+
+  .color-chip .swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.15);
+    flex-shrink: 0;
+  }
+
+  .color-chip .remove-color {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0 0.1rem;
+    transition: color 0.15s;
+  }
+
+  .color-chip .remove-color:hover {
+    color: var(--accent);
+  }
+
+  .color-add-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .color-add-row input[type="text"] {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.45rem 0.7rem;
+    color: var(--text);
+    font-size: 0.85rem;
+    outline: none;
+  }
+
+  .color-add-row input[type="text"]:focus {
+    border-color: var(--accent);
+  }
+
+  .color-add-row input[type="color"] {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px;
+    cursor: pointer;
+    background: var(--bg);
+  }
+
+  .btn-small {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .btn-small:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* === 입력 영역 === */
+  .input-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .input-section label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 220px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    color: var(--text);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    resize: vertical;
+    outline: none;
+    font-family: inherit;
+  }
+
+  textarea:focus {
+    border-color: var(--accent);
+  }
+
+  /* === 버튼 그룹 === */
+  .btn-group {
+    display: flex;
+    gap: 0.7rem;
+    justify-content: center;
+  }
+
+  .btn {
+    padding: 0.7rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-edit {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-edit:hover {
+    background: #d63650;
+  }
+
+  .btn-convert {
+    background: var(--surface-alt);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-convert:hover {
+    background: #1a5276;
+    border-color: #1a5276;
+    color: #fff;
+  }
+
+  .btn-convert:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* === 미리보기 영역 === */
+  .preview-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: none;
+  }
+
+  .preview-section.active {
+    display: block;
+  }
+
+  .preview-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .preview-body {
+    line-height: 2;
+    font-size: 1rem;
+  }
+
+  .preview-body .line {
+    padding: 0.15rem 0.3rem;
+    border-radius: 3px;
+    cursor: default;
+    transition: background 0.15s;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .preview-body .line-narration {
+    color: #e0e0e0;
+  }
+
+  .preview-body .line-dialogue {
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    padding-left: 0.6rem;
+  }
+
+  .preview-body .line-dialogue:hover {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .preview-body .line-monologue {
+    color: #999;
+    font-style: italic;
+  }
+
+  /* === 색상 선택 팝업 === */
+  .color-popup {
+    position: fixed;
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem;
+    gap: 0.4rem;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    flex-wrap: wrap;
+    max-width: 200px;
+  }
+
+  .color-popup.show {
+    display: flex;
+  }
+
+  .color-popup-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.1s;
+  }
+
+  .color-popup-btn:hover {
+    border-color: #fff;
+    transform: scale(1.1);
+  }
+
+  .color-popup-btn.reset-btn {
+    background: transparent;
+    border: 2px dashed var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* === 토스트 === */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--accent);
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 2000;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* === 범례 === */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  .legend span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .legend-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+</style>
 </head>
 <body>
 
+<h1>소설 HTML 에디터</h1>
+<p class="subtitle">소설 텍스트를 입력하고 대사에 형광펜을 칠한 뒤, HTML로 변환하세요.</p>
+
 <div class="container">
-    <h1>🎬 소설 자동 포매터</h1>
-    <textarea id="inputText" placeholder="여기에 소설 전문을 붙여넣으세요. &#10;&quot;따옴표&quot;가 있는 줄은 자동으로 대사로 인식합니다."></textarea>
-    
-    <div class="btn-group">
-        <button class="btn-process" onclick="processNovel()">변환하기</button>
-        <button class="btn-copy" onclick="copyHTML()">HTML 코드 복사</button>
+
+  <!-- 색상 관리 -->
+  <div class="color-manager">
+    <div class="color-manager-title">형광펜 색상 관리</div>
+    <div class="color-list" id="colorList"></div>
+    <div class="color-add-row">
+      <input type="text" id="colorNameInput" placeholder="색상 이름 (예: 빨강)">
+      <input type="color" id="colorValueInput" value="#ff6b6b">
+      <button class="btn-small" id="addColorBtn">추가</button>
     </div>
+  </div>
 
-    <div id="preview">변환된 소설이 여기에 표시됩니다. 줄을 클릭해서 색상을 바꾸세요!</div>
+  <!-- 입력 -->
+  <div class="input-section">
+    <label for="novelInput">소설 전문 입력</label>
+    <textarea id="novelInput" placeholder="소설 텍스트를 여기에 붙여넣으세요...
+
+예시:
+그는 긴 복도를 걸었다.
+「ミカエル、俺はずっと、この話をしたら全部終わると思っていた」
+&quot;미카엘, 나는 계속, 이 이야기를 하면 전부 끝난다고 생각했었어&quot;
+**이로울**: 미카엘, 나는 계속, 이 이야기를 하면 전부 끝난다고 생각했었어
+*이 시대의 모든 요리인에게 바칩니다.*
+"></textarea>
+  </div>
+
+  <!-- 버튼 -->
+  <div class="btn-group">
+    <button class="btn btn-edit" id="editBtn">편집</button>
+    <button class="btn btn-convert" id="convertBtn" disabled>변환</button>
+  </div>
+
+  <!-- 미리보기 -->
+  <div class="preview-section" id="previewSection">
+    <div class="preview-title">미리보기 <span style="font-weight:400;font-size:0.78rem;color:#666;">— 대사를 클릭하여 형광펜 색상을 지정하세요</span></div>
+    <div class="legend" id="legendArea"></div>
+    <div class="preview-body" id="previewBody"></div>
+  </div>
+
 </div>
 
-<div id="palette">
-    <div class="color-dot" style="background: none; border: 1px dashed #ccc;" onclick="applyColor('')"></div>
-    <div class="color-dot" style="background: rgba(255, 150, 180, 0.3);" onclick="applyColor('rgba(255, 150, 180, 0.3)')"></div>
-    <div class="color-dot" style="background: rgba(100, 210, 190, 0.3);" onclick="applyColor('rgba(100, 210, 190, 0.3)')"></div>
-    <div class="color-dot" style="background: rgba(160, 210, 120, 0.3);" onclick="applyColor('rgba(160, 210, 120, 0.3)')"></div>
-    <div class="color-dot" style="background: rgba(255, 220, 100, 0.3);" onclick="applyColor('rgba(255, 220, 100, 0.3)')"></div>
-    <div class="color-dot" style="background: rgba(150, 150, 150, 0.2);" onclick="applyColor('rgba(150, 150, 150, 0.2)')"></div>
-</div>
+<!-- 색상 선택 팝업 -->
+<div class="color-popup" id="colorPopup"></div>
+
+<!-- 토스트 -->
+<div class="toast" id="toast"></div>
 
 <script>
-    let selectedLine = null;
+(function() {
+  // === 상태 ===
+  const highlightColors = [];
+  const lineData = []; // { type, original, highlightColor }
+  let currentDialogueEl = null;
 
-    function processNovel() {
-        const text = document.getElementById('inputText').value;
-        const preview = document.getElementById('preview');
-        preview.innerHTML = '';
+  // DOM
+  const colorList = document.getElementById('colorList');
+  const colorNameInput = document.getElementById('colorNameInput');
+  const colorValueInput = document.getElementById('colorValueInput');
+  const addColorBtn = document.getElementById('addColorBtn');
+  const novelInput = document.getElementById('novelInput');
+  const editBtn = document.getElementById('editBtn');
+  const convertBtn = document.getElementById('convertBtn');
+  const previewSection = document.getElementById('previewSection');
+  const previewBody = document.getElementById('previewBody');
+  const colorPopup = document.getElementById('colorPopup');
+  const legendArea = document.getElementById('legendArea');
 
-        const lines = text.split('\n');
+  // === 기본 색상 ===
+  const defaults = [
+    { name: '빨강', value: '#ff6b6b' },
+    { name: '주황', value: '#ffa94d' },
+    { name: '노랑', value: '#ffd43b' },
+    { name: '초록', value: '#69db7c' },
+    { name: '파랑', value: '#74c0fc' },
+  ];
 
-        lines.forEach(line => {
-            if (line.trim() === '') {
-                preview.appendChild(document.createElement('br'));
-                return;
-            }
+  defaults.forEach(c => addColor(c.name, c.value));
 
-            const div = document.createElement('div');
-            div.className = 'line';
-            
-            // 자동 인식 로직
-            if (line.includes('"')) {
-                div.classList.add('type-dialogue');
-                div.style.backgroundColor = 'rgba(255, 150, 180, 0.3)'; // 기본 핑크
-            } else if (line.includes('(') || line.includes('\'')) {
-                div.classList.add('type-monologue');
-            } else {
-                div.classList.add('type-narration');
-            }
+  // === 색상 관리 ===
+  function addColor(name, value) {
+    highlightColors.push({ name, value });
+    renderColors();
+  }
 
-            div.innerText = line;
-            div.onclick = (e) => showPalette(e, div);
-            preview.appendChild(div);
-        });
+  function removeColor(idx) {
+    highlightColors.splice(idx, 1);
+    renderColors();
+  }
+
+  function renderColors() {
+    colorList.innerHTML = '';
+    highlightColors.forEach((c, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'color-chip';
+      chip.innerHTML = `
+        <span class="swatch" style="background:${c.value}"></span>
+        <span>${c.name}</span>
+        <button class="remove-color" data-idx="${i}">&times;</button>
+      `;
+      colorList.appendChild(chip);
+    });
+
+    colorList.querySelectorAll('.remove-color').forEach(btn => {
+      btn.addEventListener('click', () => removeColor(parseInt(btn.dataset.idx)));
+    });
+
+    renderLegend();
+  }
+
+  function renderLegend() {
+    legendArea.innerHTML = '';
+    highlightColors.forEach(c => {
+      const s = document.createElement('span');
+      s.innerHTML = `<span class="legend-icon" style="background:${c.value}"></span>${c.name}`;
+      legendArea.appendChild(s);
+    });
+  }
+
+  addColorBtn.addEventListener('click', () => {
+    const name = colorNameInput.value.trim();
+    const value = colorValueInput.value;
+    if (!name) return;
+    addColor(name, value);
+    colorNameInput.value = '';
+  });
+
+  // === 텍스트 파싱 ===
+  function classifyLine(raw) {
+    const trimmed = raw.trim();
+    if (!trimmed) return { type: 'empty', original: raw };
+
+    // 독백: *텍스트* (단일 별표로만 감싸짐, **은 아님)
+    if (/^\*[^*].*[^*]\*$/.test(trimmed) && !trimmed.startsWith('**')) {
+      return { type: 'monologue', original: raw };
     }
 
-    function showPalette(e, element) {
-        selectedLine = element;
-        const palette = document.getElementById('palette');
-        palette.style.display = 'block';
-        palette.style.top = e.pageY + 'px';
-        palette.style.left = e.pageX + 'px';
+    // 대사 패턴 a: 「...」
+    if (/^「.*」$/.test(trimmed)) {
+      return { type: 'dialogue', original: raw, highlightColor: null };
     }
 
-    function applyColor(color) {
-        if (selectedLine) {
-            selectedLine.style.backgroundColor = color;
-            document.getElementById('palette').style.display = 'none';
+    // 대사 패턴 b: "..."
+    if (/^".*"$/.test(trimmed) || /^".*"$/.test(trimmed)) {
+      return { type: 'dialogue', original: raw, highlightColor: null };
+    }
+
+    // 대사 패턴 c: **이름**: 텍스트
+    if (/^\*\*[^*]+\*\*\s*[:：]/.test(trimmed)) {
+      return { type: 'dialogue', original: raw, highlightColor: null };
+    }
+
+    // 내레이션
+    return { type: 'narration', original: raw };
+  }
+
+  // === 편집 ===
+  editBtn.addEventListener('click', () => {
+    const text = novelInput.value;
+    if (!text.trim()) return;
+
+    lineData.length = 0;
+    const lines = text.split('\n');
+    lines.forEach(l => lineData.push(classifyLine(l)));
+
+    renderPreview();
+    previewSection.classList.add('active');
+    convertBtn.disabled = false;
+  });
+
+  function renderPreview() {
+    previewBody.innerHTML = '';
+
+    lineData.forEach((item, idx) => {
+      if (item.type === 'empty') {
+        const br = document.createElement('div');
+        br.style.height = '0.5em';
+        previewBody.appendChild(br);
+        return;
+      }
+
+      const el = document.createElement('div');
+      el.className = 'line';
+      el.dataset.idx = idx;
+
+      const displayText = escapeHtml(item.original.trim());
+
+      if (item.type === 'narration') {
+        el.classList.add('line-narration');
+        el.innerHTML = displayText;
+      } else if (item.type === 'dialogue') {
+        el.classList.add('line-dialogue');
+        el.innerHTML = displayText;
+        if (item.highlightColor) {
+          el.style.background = item.highlightColor + '33';
+          el.style.borderLeftColor = item.highlightColor;
         }
+        el.addEventListener('click', (e) => openColorPopup(e, idx, el));
+      } else if (item.type === 'monologue') {
+        el.classList.add('line-monologue');
+        el.innerHTML = displayText;
+      }
+
+      previewBody.appendChild(el);
+    });
+  }
+
+  // === 색상 팝업 ===
+  function openColorPopup(e, idx, el) {
+    e.stopPropagation();
+    currentDialogueEl = { idx, el };
+
+    colorPopup.innerHTML = '';
+
+    highlightColors.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'color-popup-btn';
+      btn.style.background = c.value;
+      btn.title = c.name;
+      btn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        applyHighlight(idx, el, c.value);
+        closePopup();
+      });
+      colorPopup.appendChild(btn);
+    });
+
+    // 리셋 버튼
+    const resetBtn = document.createElement('button');
+    resetBtn.className = 'color-popup-btn reset-btn';
+    resetBtn.textContent = '✕';
+    resetBtn.title = '색상 제거';
+    resetBtn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      applyHighlight(idx, el, null);
+      closePopup();
+    });
+    colorPopup.appendChild(resetBtn);
+
+    const rect = el.getBoundingClientRect();
+    colorPopup.style.left = (e.clientX) + 'px';
+    colorPopup.style.top = (rect.bottom + 6) + 'px';
+    colorPopup.classList.add('show');
+  }
+
+  function applyHighlight(idx, el, color) {
+    lineData[idx].highlightColor = color;
+    if (color) {
+      el.style.background = color + '33';
+      el.style.borderLeftColor = color;
+    } else {
+      el.style.background = '';
+      el.style.borderLeftColor = 'transparent';
     }
+  }
 
-    function copyHTML() {
-        const preview = document.getElementById('preview');
-        // 스타일을 인라인으로 변환하여 복사 (외부 CSS 없이도 작동하게)
-        let htmlOutput = `<div style="line-height:1.95; font-size:15px; font-family: sans-serif; color:#1a1a1a;">\n`;
-        
-        preview.childNodes.forEach(node => {
-            if (node.nodeName === 'BR') {
-                htmlOutput += `<br>\n`;
-            } else {
-                const bgColor = node.style.backgroundColor || 'transparent';
-                const isMonologue = node.classList.contains('type-monologue');
-                
-                let style = `padding: 1px 4px; border-radius: 3px; background-color: ${bgColor};`;
-                if(isMonologue) {
-                    style = `font-style: italic; color: #3a6a5a; border-left: 2px solid #5a8a7a; padding-left: 14px; display: block; margin: 10px 0;`;
-                }
+  function closePopup() {
+    colorPopup.classList.remove('show');
+    currentDialogueEl = null;
+  }
 
-                htmlOutput += `  <div style="${style}">${node.innerText}</div>\n`;
-            }
-        });
-        
-        htmlOutput += `</div>`;
+  document.addEventListener('click', closePopup);
 
-        navigator.clipboard.writeText(htmlOutput).then(() => {
-            alert('HTML 코드가 복사되었습니다! 포스타입이나 블로그의 HTML 편집기 모드에 붙여넣으세요.');
-        });
-    }
+  // === HTML 변환 ===
+  convertBtn.addEventListener('click', () => {
+    const html = generateHtml();
+    copyToClipboard(html);
+    showToast('HTML 코드가 클립보드에 복사되었습니다!');
+  });
 
-    // 배경 클릭 시 팔레트 닫기
-    window.onclick = function(event) {
-        if (!event.target.matches('.line') && !event.target.matches('.color-dot')) {
-            document.getElementById('palette').style.display = 'none';
+  function generateHtml() {
+    let lines = [];
+
+    lineData.forEach(item => {
+      if (item.type === 'empty') {
+        lines.push('<br>');
+        return;
+      }
+
+      const text = escapeHtml(item.original.trim());
+
+      if (item.type === 'narration') {
+        lines.push(`<p style="color:#000;margin:0.4em 0;line-height:1.9;">${text}</p>`);
+      } else if (item.type === 'dialogue') {
+        if (item.highlightColor) {
+          lines.push(`<p style="background:${item.highlightColor}33;border-left:3px solid ${item.highlightColor};padding-left:0.6em;margin:0.4em 0;line-height:1.9;">${text}</p>`);
+        } else {
+          lines.push(`<p style="color:#000;margin:0.4em 0;line-height:1.9;">${text}</p>`);
         }
+      } else if (item.type === 'monologue') {
+        lines.push(`<p style="color:#888;font-style:italic;margin:0.4em 0;line-height:1.9;">${text}</p>`);
+      }
+    });
+
+    return lines.join('\n');
+  }
+
+  // === 유틸 ===
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
     }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+})();
 </script>
 
 </body>

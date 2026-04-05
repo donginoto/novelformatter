@@ -636,9 +636,9 @@ function classifyLine(raw) {
   if (!t) return {type:'empty', original:raw};
   if (/^###\s+/.test(t)) return {type:'heading', original:raw, headingText:t.replace(/^###\s+/,'')};
 
-  // dialogue: **name**: text or **name**: text (FIRST PRIORITY)
-  if (/^\*\*[^*]+\*\*\s*[:：]/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
-
+  // dialogue: **name**: text or **name:** text (FIRST PRIORITY)
+  if (/^\*\*[^*]+[:：]\s*\*\*|^\*\*[^*]+\*\*\s*[:：]/.test(t)) return {type:'dialogue', original:raw, highlightColor:null};
+  
   // monologue: *text* (NOT **)
   if (/^\*([^*].*[^*])\*$/.test(t) && !t.startsWith('**')) return {type:'monologue', original:raw};
   // monologue: (text)

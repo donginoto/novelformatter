@@ -17,11 +17,7 @@
     --shadow: rgba(0,0,0,0.05);
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
@@ -38,7 +34,6 @@
     font-size: 1.6rem;
     margin-bottom: 0.3rem;
     color: var(--text);
-    letter-spacing: 0.02em;
     font-weight: 700;
   }
 
@@ -56,8 +51,8 @@
     gap: 1.5rem;
   }
 
-  /* === 색상 관리 패널 === */
-  .color-manager {
+  /* === 패널 공통 === */
+  .panel {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -65,7 +60,7 @@
     box-shadow: 0 2px 8px var(--shadow);
   }
 
-  .color-manager-title {
+  .panel-title {
     font-size: 0.85rem;
     font-weight: 600;
     margin-bottom: 0.8rem;
@@ -74,29 +69,30 @@
     letter-spacing: 0.05em;
   }
 
+  /* === 색상 관리 === */
   .color-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.45rem;
     margin-bottom: 0.8rem;
   }
 
   .color-chip {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.3rem;
     background: var(--surface-alt);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.82rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0;
     cursor: default;
   }
 
   .color-chip .swatch {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
     border: 1px solid rgba(0,0,0,0.08);
     flex-shrink: 0;
   }
@@ -106,37 +102,19 @@
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.85rem;
     line-height: 1;
-    padding: 0 0.1rem;
+    padding: 0 0.15rem;
     transition: color 0.15s;
   }
 
-  .color-chip .remove-color:hover {
-    color: #e74c3c;
-  }
+  .color-chip .remove-color:hover { color: #e74c3c; }
 
   .color-add-row {
     display: flex;
     gap: 0.5rem;
     align-items: center;
     flex-wrap: wrap;
-  }
-
-  .color-add-row input[type="text"] {
-    flex: 1;
-    min-width: 100px;
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.45rem 0.7rem;
-    color: var(--text);
-    font-size: 0.85rem;
-    outline: none;
-  }
-
-  .color-add-row input[type="text"]:focus {
-    border-color: var(--accent);
   }
 
   .color-add-row input[type="color"] {
@@ -161,19 +139,58 @@
     transition: background 0.15s;
   }
 
-  .btn-small:hover {
-    background: var(--accent-hover);
+  .btn-small:hover { background: var(--accent-hover); }
+
+  /* === 독백 색상 설정 === */
+  .monologue-settings {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+
+  .monologue-settings label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .monologue-settings input[type="color"] {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px;
+    cursor: pointer;
+    background: var(--surface-alt);
+  }
+
+  /* === 챕터 제목 색상 === */
+  .heading-settings {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .heading-settings label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .heading-settings input[type="color"] {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px;
+    cursor: pointer;
+    background: var(--surface-alt);
   }
 
   /* === 입력 영역 === */
-  .input-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.2rem 1.5rem;
-    box-shadow: 0 2px 8px var(--shadow);
-  }
-
   .input-section label {
     display: block;
     font-size: 0.85rem;
@@ -199,14 +216,8 @@
     font-family: inherit;
   }
 
-  textarea:focus {
-    border-color: var(--accent);
-  }
-
-  textarea::placeholder {
-    color: #bbb;
-    font-size: 0.85rem;
-  }
+  textarea:focus { border-color: var(--accent); }
+  textarea::placeholder { color: #bbb; font-size: 0.85rem; }
 
   /* === 버튼 그룹 === */
   .btn-group {
@@ -226,65 +237,79 @@
     transition: background 0.2s, transform 0.1s;
   }
 
-  .btn:active {
-    transform: scale(0.97);
+  .btn:active { transform: scale(0.97); }
+  .btn-edit { background: var(--accent); color: #fff; }
+  .btn-edit:hover { background: var(--accent-hover); }
+  .btn-chapter { background: #a8d8b9; color: #fff; }
+  .btn-chapter:hover { background: #8cc9a1; }
+  .btn-convert { background: #8ec5e2; color: #fff; }
+  .btn-convert:hover { background: #6fb5d8; }
+  .btn-convert:disabled, .btn-chapter:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* === 일괄 형광펜 버튼 === */
+  .batch-bar {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 0.7rem 1.2rem;
+    box-shadow: 0 2px 12px rgba(201,160,220,0.15);
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
-  .btn-edit {
-    background: var(--accent);
-    color: #fff;
+  .batch-bar.active { display: flex; }
+
+  .batch-bar-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
   }
 
-  .btn-edit:hover {
-    background: var(--accent-hover);
+  .batch-color-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.1s;
   }
 
-  .btn-chapter {
-    background: #a8d8b9;
-    color: #fff;
+  .batch-color-btn:hover {
+    border-color: var(--accent);
+    transform: scale(1.12);
   }
 
-  .btn-chapter:hover {
-    background: #8cc9a1;
+  .batch-color-btn.reset-btn {
+    background: var(--surface-alt);
+    border: 2px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
   }
 
-  .btn-convert {
-    background: #8ec5e2;
-    color: #fff;
+  .batch-deselect {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-left: 0.3rem;
+    transition: background 0.15s;
   }
 
-  .btn-convert:hover {
-    background: #6fb5d8;
-  }
-
-  .btn-convert:disabled,
-  .btn-chapter:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
+  .batch-deselect:hover { background: #f3eef8; }
 
   /* === 챕터 리스트 === */
-  .chapter-list {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.2rem 1.5rem;
-    box-shadow: 0 2px 8px var(--shadow);
-    display: none;
-  }
-
-  .chapter-list.active {
-    display: block;
-  }
-
-  .chapter-list-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.8rem;
-  }
+  .chapter-list { display: none; }
+  .chapter-list.active { display: block; }
 
   .chapter-item {
     display: flex;
@@ -300,19 +325,9 @@
     transition: background 0.15s;
   }
 
-  .chapter-item:hover {
-    background: #f3eef8;
-  }
-
-  .chapter-item.selected {
-    border-color: var(--accent);
-    background: #f3eef8;
-  }
-
-  .chapter-item-name {
-    font-weight: 600;
-    flex: 1;
-  }
+  .chapter-item:hover { background: #f3eef8; }
+  .chapter-item.selected { border-color: var(--accent); background: #f3eef8; }
+  .chapter-item-name { font-weight: 600; flex: 1; }
 
   .chapter-item-actions {
     display: flex;
@@ -330,38 +345,12 @@
     transition: color 0.15s, background 0.15s;
   }
 
-  .chapter-item-actions button:hover {
-    color: #e74c3c;
-    background: rgba(231,76,60,0.08);
-  }
+  .chapter-item-actions button:hover { color: #e74c3c; background: rgba(231,76,60,0.08); }
+  .chapter-item-actions .edit-chapter-btn:hover { color: var(--accent-hover); background: rgba(201,160,220,0.1); }
 
-  .chapter-item-actions .edit-chapter-btn:hover {
-    color: var(--accent-hover);
-    background: rgba(201,160,220,0.1);
-  }
-
-  /* === 미리보기 영역 === */
-  .preview-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px var(--shadow);
-    display: none;
-  }
-
-  .preview-section.active {
-    display: block;
-  }
-
-  .preview-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.3rem;
-  }
+  /* === 미리보기 === */
+  .preview-section { display: none; }
+  .preview-section.active { display: block; }
 
   .preview-hint {
     font-size: 0.78rem;
@@ -381,31 +370,31 @@
     transition: background 0.15s;
     display: block;
     margin-bottom: 0.2rem;
+    position: relative;
   }
 
-  .preview-body .line-narration {
-    color: #3a3a3a;
-  }
+  .preview-body .line-narration { color: #3a3a3a; }
 
   .preview-body .line-dialogue {
     cursor: pointer;
-    border-left: 3px solid transparent;
-    padding-left: 0.6rem;
+    padding-left: 0.4rem;
   }
 
-  .preview-body .line-dialogue:hover {
-    background: rgba(0,0,0,0.03);
+  .preview-body .line-dialogue:hover { background: rgba(0,0,0,0.03); }
+
+  .preview-body .line-dialogue.selected-for-batch {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-radius: 4px;
   }
 
   .preview-body .line-monologue {
-    color: #aaa;
     font-style: italic;
   }
 
   .preview-body .chapter-heading {
     font-size: 1.05rem;
     font-weight: 700;
-    color: var(--accent-hover);
     margin: 1rem 0 0.5rem 0;
     padding-bottom: 0.3rem;
     border-bottom: 2px solid var(--border);
@@ -426,9 +415,7 @@
     max-width: 220px;
   }
 
-  .color-popup.show {
-    display: flex;
-  }
+  .color-popup.show { display: flex; }
 
   .color-popup-btn {
     width: 32px;
@@ -439,10 +426,7 @@
     transition: border-color 0.15s, transform 0.1s;
   }
 
-  .color-popup-btn:hover {
-    border-color: var(--accent);
-    transform: scale(1.12);
-  }
+  .color-popup-btn:hover { border-color: var(--accent); transform: scale(1.12); }
 
   .color-popup-btn.reset-btn {
     background: var(--surface-alt);
@@ -473,10 +457,7 @@
     box-shadow: 0 4px 16px rgba(201,160,220,0.3);
   }
 
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* === 범례 === */
   .legend {
@@ -488,15 +469,11 @@
     margin-bottom: 0.8rem;
   }
 
-  .legend span {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
+  .legend span { display: flex; align-items: center; gap: 0.3rem; }
 
   .legend-icon {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 3px;
     display: inline-block;
     border: 1px solid rgba(0,0,0,0.06);
@@ -513,9 +490,7 @@
     justify-content: center;
   }
 
-  .modal-overlay.show {
-    display: flex;
-  }
+  .modal-overlay.show { display: flex; }
 
   .modal {
     background: var(--surface);
@@ -526,11 +501,7 @@
     box-shadow: 0 8px 40px rgba(0,0,0,0.15);
   }
 
-  .modal h3 {
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
-    color: var(--text);
-  }
+  .modal h3 { font-size: 1rem; margin-bottom: 0.8rem; color: var(--text); }
 
   .modal input[type="text"] {
     width: 100%;
@@ -544,15 +515,9 @@
     margin-bottom: 1rem;
   }
 
-  .modal input[type="text"]:focus {
-    border-color: var(--accent);
-  }
+  .modal input[type="text"]:focus { border-color: var(--accent); }
 
-  .modal-btns {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-end;
-  }
+  .modal-btns { display: flex; gap: 0.5rem; justify-content: flex-end; }
 
   .modal-btns button {
     padding: 0.45rem 1.2rem;
@@ -563,21 +528,15 @@
     cursor: pointer;
   }
 
-  .modal-btns .modal-cancel {
-    background: var(--surface-alt);
-    color: var(--text-muted);
-  }
-
-  .modal-btns .modal-confirm {
-    background: var(--accent);
-    color: #fff;
-  }
+  .modal-btns .modal-cancel { background: var(--surface-alt); color: var(--text-muted); }
+  .modal-btns .modal-confirm { background: var(--accent); color: #fff; }
 
   @media (max-width: 600px) {
     body { padding: 1rem 0.5rem; }
     .container { gap: 1rem; }
     .btn { padding: 0.6rem 1.2rem; font-size: 0.88rem; }
     textarea { min-height: 180px; }
+    .panel { padding: 1rem; }
   }
 </style>
 </head>
@@ -589,20 +548,33 @@
 <div class="container">
 
   <!-- 색상 관리 -->
-  <div class="color-manager">
-    <div class="color-manager-title">형광펜 색상 관리</div>
+  <div class="panel">
+    <div class="panel-title">형광펜 색상 관리</div>
     <div class="color-list" id="colorList"></div>
     <div class="color-add-row">
-      <input type="text" id="colorNameInput" placeholder="색상 이름 (예: 연분홍)">
       <input type="color" id="colorValueInput" value="#f8b4c8">
       <button class="btn-small" id="addColorBtn">추가</button>
     </div>
   </div>
 
+  <!-- 스타일 설정 -->
+  <div class="panel">
+    <div class="panel-title">스타일 설정</div>
+    <div class="monologue-settings">
+      <label>독백 글자색</label>
+      <input type="color" id="monoColorInput" value="#aaaaaa">
+    </div>
+    <div class="heading-settings">
+      <label>챕터 제목색</label>
+      <input type="color" id="headingColorInput" value="#b07cc8">
+    </div>
+  </div>
+
   <!-- 입력 -->
-  <div class="input-section">
+  <div class="panel input-section">
     <label for="novelInput">소설 전문 입력</label>
     <textarea id="novelInput" placeholder='"안녕"
+"안녕"
 「안녕」
 **깡캐:** 안녕
 **깡캐**: 안녕
@@ -621,29 +593,36 @@
     <button class="btn btn-convert" id="convertBtn" disabled>변환</button>
   </div>
 
+  <!-- 일괄 형광펜 바 -->
+  <div class="batch-bar" id="batchBar">
+    <span class="batch-bar-label">선택한 대사에 일괄 적용:</span>
+    <div id="batchColors"></div>
+    <button class="batch-deselect" id="batchDeselect">선택 해제</button>
+  </div>
+
   <!-- 챕터 리스트 -->
-  <div class="chapter-list" id="chapterList">
-    <div class="chapter-list-title">챕터 목록</div>
+  <div class="panel chapter-list" id="chapterList">
+    <div class="panel-title">챕터 목록</div>
     <div id="chapterItems"></div>
   </div>
 
   <!-- 미리보기 -->
-  <div class="preview-section" id="previewSection">
-    <div class="preview-title">미리보기</div>
-    <div class="preview-hint">대사를 클릭하여 형광펜 색상을 지정하세요</div>
+  <div class="panel preview-section" id="previewSection">
+    <div class="panel-title">미리보기</div>
+    <div class="preview-hint">대사를 클릭하여 형광펜 색상을 지정하세요 · Shift+클릭으로 다중 선택</div>
     <div class="legend" id="legendArea"></div>
     <div class="preview-body" id="previewBody"></div>
   </div>
 
 </div>
 
-<!-- 색상 선택 팝업 -->
+<!-- 색상 선택 팝업 (단일) -->
 <div class="color-popup" id="colorPopup"></div>
 
 <!-- 토스트 -->
 <div class="toast" id="toast"></div>
 
-<!-- 챕터 이름 모달 -->
+<!-- 모달 -->
 <div class="modal-overlay" id="chapterModal">
   <div class="modal">
     <h3 id="chapterModalTitle">챕터 이름 입력</h3>
@@ -657,16 +636,23 @@
 
 <script>
 (function() {
-  // === 상태 ===
-  const highlightColors = [];
-  const chapters = []; // { name, lineData: [] }
-  let currentEditingChapter = -1;
 
-  // DOM
+  /* ========== STATE ========== */
+  const highlightColors = [];
+  const chapters = [];
+  let currentEditingChapter = -1;
+  let monologueColor = '#aaaaaa';
+  let headingColor = '#b07cc8';
+
+  // 다중 선택
+  const selectedDialogues = new Set(); // "chIdx-lineIdx"
+
+  /* ========== DOM ========== */
   const colorList = document.getElementById('colorList');
-  const colorNameInput = document.getElementById('colorNameInput');
   const colorValueInput = document.getElementById('colorValueInput');
   const addColorBtn = document.getElementById('addColorBtn');
+  const monoColorInput = document.getElementById('monoColorInput');
+  const headingColorInput = document.getElementById('headingColorInput');
   const novelInput = document.getElementById('novelInput');
   const editBtn = document.getElementById('editBtn');
   const chapterAddBtn = document.getElementById('chapterAddBtn');
@@ -677,8 +663,10 @@
   const legendArea = document.getElementById('legendArea');
   const chapterListEl = document.getElementById('chapterList');
   const chapterItemsEl = document.getElementById('chapterItems');
+  const batchBar = document.getElementById('batchBar');
+  const batchColors = document.getElementById('batchColors');
+  const batchDeselect = document.getElementById('batchDeselect');
 
-  // Modal
   const chapterModal = document.getElementById('chapterModal');
   const chapterModalTitle = document.getElementById('chapterModalTitle');
   const chapterNameInput = document.getElementById('chapterNameInput');
@@ -686,21 +674,20 @@
   const chapterModalConfirm = document.getElementById('chapterModalConfirm');
   let modalCallback = null;
 
-  // === 기본 색상 ===
+  /* ========== DEFAULT COLORS ========== */
   const defaults = [
-    { name: '연분홍', value: '#f8b4c8' },
-    { name: '연노랑', value: '#fef3a7' },
-    { name: '연두', value: '#c8e6b2' },
-    { name: '하늘', value: '#a8d8ea' },
-    { name: '연보라', value: '#d4b5e0' },
-    { name: '연회색', value: '#d5d5d5' },
+    { value: '#f8b4c8' },
+    { value: '#fef3a7' },
+    { value: '#c8e6b2' },
+    { value: '#a8d8ea' },
+    { value: '#d4b5e0' },
+    { value: '#d5d5d5' },
   ];
+  defaults.forEach(c => addColor(c.value));
 
-  defaults.forEach(c => addColor(c.name, c.value));
-
-  // === 색상 관리 ===
-  function addColor(name, value) {
-    highlightColors.push({ name, value });
+  /* ========== COLOR MANAGEMENT ========== */
+  function addColor(value) {
+    highlightColors.push({ value });
     renderColors();
   }
 
@@ -716,7 +703,6 @@
       chip.className = 'color-chip';
       chip.innerHTML = `
         <span class="swatch" style="background:${c.value}"></span>
-        <span>${c.name}</span>
         <button class="remove-color" data-idx="${i}">&times;</button>
       `;
       colorList.appendChild(chip);
@@ -725,36 +711,44 @@
       btn.addEventListener('click', () => removeColor(parseInt(btn.dataset.idx)));
     });
     renderLegend();
+    renderBatchColors();
   }
 
   function renderLegend() {
     legendArea.innerHTML = '';
     highlightColors.forEach(c => {
       const s = document.createElement('span');
-      s.innerHTML = `<span class="legend-icon" style="background:${c.value}"></span>${c.name}`;
+      s.innerHTML = `<span class="legend-icon" style="background:${c.value}"></span>`;
       legendArea.appendChild(s);
     });
   }
 
   addColorBtn.addEventListener('click', () => {
-    const name = colorNameInput.value.trim();
-    const value = colorValueInput.value;
-    if (!name) return;
-    addColor(name, value);
-    colorNameInput.value = '';
+    addColor(colorValueInput.value);
   });
 
-  // === 텍스트 파싱 ===
+  /* ========== MONOLOGUE & HEADING COLOR ========== */
+  monoColorInput.addEventListener('input', () => {
+    monologueColor = monoColorInput.value;
+    renderFullPreview();
+  });
+
+  headingColorInput.addEventListener('input', () => {
+    headingColor = headingColorInput.value;
+    renderFullPreview();
+  });
+
+  /* ========== TEXT PARSING ========== */
   function classifyLine(raw) {
     const trimmed = raw.trim();
     if (!trimmed) return { type: 'empty', original: raw };
 
-    // 챕터 헤딩: ### 으로 시작
+    // 챕터 헤딩
     if (/^###\s+/.test(trimmed)) {
       return { type: 'heading', original: raw, headingText: trimmed.replace(/^###\s+/, '') };
     }
 
-    // 독백: *텍스트* (단일 별표, **이 아닌)
+    // 독백: *텍스트* (단일)
     if (/^\*[^*].*[^*]\*$/.test(trimmed) && !trimmed.startsWith('**')) {
       return { type: 'monologue', original: raw };
     }
@@ -764,8 +758,8 @@
       return { type: 'monologue', original: raw };
     }
 
-    // 독백: '텍스트' (작은따옴표)
-    if (/^'.*'$/.test(trimmed) || /^'.*'$/.test(trimmed)) {
+    // 독백: '텍스트' 또는 '텍스트'
+    if (/^'[^']+'$/.test(trimmed) || /^'[^']+'$/.test(trimmed)) {
       return { type: 'monologue', original: raw };
     }
 
@@ -774,47 +768,40 @@
       return { type: 'dialogue', original: raw, highlightColor: null };
     }
 
-    // 대사: "..." 또는 "..."
-    if (/^".*"$/.test(trimmed) || /^".*"$/.test(trimmed) || /^".*"$/.test(trimmed)) {
+    // 대사: "..." "..." "..."
+    if (/^".*"$/.test(trimmed) || /^\u201c.*\u201d$/.test(trimmed) || /^\u201c.*"$/.test(trimmed) || /^".*\u201d$/.test(trimmed)) {
       return { type: 'dialogue', original: raw, highlightColor: null };
     }
 
-    // 대사: **이름**: 텍스트 또는 **이름**: 텍스트
+    // 대사: **이름**: / **이름**:
     if (/^\*\*[^*]+\*\*\s*[:：]/.test(trimmed)) {
       return { type: 'dialogue', original: raw, highlightColor: null };
     }
 
-    // 내레이션
     return { type: 'narration', original: raw };
   }
 
   function parseText(text) {
-    const lines = text.split('\n');
-    return lines.map(l => classifyLine(l));
+    return text.split('\n').map(l => classifyLine(l));
   }
 
-  // ### 자동 챕터 분할
   function splitByHeadings(lineDataArr) {
     const result = [];
     let current = null;
-
     lineDataArr.forEach(item => {
       if (item.type === 'heading') {
         if (current) result.push(current);
         current = { name: item.headingText, lineData: [] };
       } else {
-        if (!current) {
-          current = { name: '챕터 ' + (result.length + 1), lineData: [] };
-        }
+        if (!current) current = { name: '챕터 ' + (result.length + 1), lineData: [] };
         current.lineData.push(item);
       }
     });
-
     if (current && current.lineData.length > 0) result.push(current);
     return result;
   }
 
-  // === 편집 (텍스트에서 ### 감지시 자동 챕터 분할) ===
+  /* ========== EDIT ========== */
   editBtn.addEventListener('click', () => {
     const text = novelInput.value;
     if (!text.trim()) return;
@@ -823,32 +810,27 @@
     const hasHeadings = allLines.some(l => l.type === 'heading');
 
     if (hasHeadings) {
-      const newChapters = splitByHeadings(allLines);
-      // 기존 챕터에 추가
-      newChapters.forEach(ch => chapters.push(ch));
+      splitByHeadings(allLines).forEach(ch => chapters.push(ch));
       novelInput.value = '';
-    } else if (chapters.length > 0) {
-      // 챕터가 이미 있으면 현재 편집 중인 챕터에 반영
-      if (currentEditingChapter >= 0 && currentEditingChapter < chapters.length) {
-        chapters[currentEditingChapter].lineData = allLines.filter(l => l.type !== 'heading');
-      }
+    } else if (chapters.length > 0 && currentEditingChapter >= 0 && currentEditingChapter < chapters.length) {
+      chapters[currentEditingChapter].lineData = allLines.filter(l => l.type !== 'heading');
     } else {
-      // 챕터 없으면 전체를 하나의 임시 미리보기로
       chapters.length = 0;
       chapters.push({ name: '챕터 1', lineData: allLines });
     }
 
+    selectedDialogues.clear();
     renderChapterList();
     renderFullPreview();
     previewSection.classList.add('active');
     convertBtn.disabled = false;
+    updateBatchBar();
   });
 
-  // === 챕터 추가 ===
+  /* ========== CHAPTER ADD ========== */
   chapterAddBtn.addEventListener('click', () => {
     const text = novelInput.value;
     if (!text.trim()) return;
-
     const allLines = parseText(text);
     const filtered = allLines.filter(l => l.type !== 'heading');
     if (filtered.length === 0) return;
@@ -856,14 +838,16 @@
     openModal('챕터 이름 입력', '챕터 ' + (chapters.length + 1), (name) => {
       chapters.push({ name, lineData: filtered });
       novelInput.value = '';
+      selectedDialogues.clear();
       renderChapterList();
       renderFullPreview();
       previewSection.classList.add('active');
       convertBtn.disabled = false;
+      updateBatchBar();
     });
   });
 
-  // === 모달 ===
+  /* ========== MODAL ========== */
   function openModal(title, defaultVal, callback) {
     chapterModalTitle.textContent = title;
     chapterNameInput.value = defaultVal;
@@ -883,21 +867,12 @@
     if (modalCallback) modalCallback(name);
     closeModal();
   });
+  chapterNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') chapterModalConfirm.click(); });
+  chapterModal.addEventListener('click', (e) => { if (e.target === chapterModal) closeModal(); });
 
-  chapterNameInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') chapterModalConfirm.click();
-  });
-
-  chapterModal.addEventListener('click', (e) => {
-    if (e.target === chapterModal) closeModal();
-  });
-
-  // === 챕터 리스트 렌더링 ===
+  /* ========== CHAPTER LIST ========== */
   function renderChapterList() {
-    if (chapters.length === 0) {
-      chapterListEl.classList.remove('active');
-      return;
-    }
+    if (chapters.length === 0) { chapterListEl.classList.remove('active'); return; }
     chapterListEl.classList.add('active');
     chapterItemsEl.innerHTML = '';
 
@@ -908,19 +883,16 @@
         <span class="chapter-item-name">${i + 1}. ${escapeHtml(ch.name)}</span>
         <span style="font-size:0.75rem;color:#bbb;margin-right:0.5rem;">${ch.lineData.length}줄</span>
         <div class="chapter-item-actions">
-          <button class="edit-chapter-btn" title="편집" data-idx="${i}">✎</button>
+          <button class="edit-chapter-btn" title="이름 수정" data-idx="${i}">✎</button>
           <button class="delete-chapter-btn" title="삭제" data-idx="${i}">✕</button>
         </div>
       `;
-
       item.addEventListener('click', (e) => {
         if (e.target.closest('.chapter-item-actions')) return;
         currentEditingChapter = i;
-        // 해당 챕터 내용을 textarea에 로드
         novelInput.value = ch.lineData.map(l => l.original).join('\n');
         renderChapterList();
       });
-
       chapterItemsEl.appendChild(item);
     });
 
@@ -942,25 +914,24 @@
         const idx = parseInt(btn.dataset.idx);
         chapters.splice(idx, 1);
         if (currentEditingChapter >= chapters.length) currentEditingChapter = chapters.length - 1;
+        selectedDialogues.clear();
         renderChapterList();
         renderFullPreview();
-        if (chapters.length === 0) {
-          previewSection.classList.remove('active');
-          convertBtn.disabled = true;
-        }
+        updateBatchBar();
+        if (chapters.length === 0) { previewSection.classList.remove('active'); convertBtn.disabled = true; }
       });
     });
   }
 
-  // === 전체 미리보기 렌더링 ===
+  /* ========== PREVIEW ========== */
   function renderFullPreview() {
     previewBody.innerHTML = '';
 
     chapters.forEach((ch, chIdx) => {
-      // 챕터 제목
       const heading = document.createElement('div');
       heading.className = 'chapter-heading';
       heading.textContent = ch.name;
+      heading.style.color = headingColor;
       previewBody.appendChild(heading);
 
       ch.lineData.forEach((item, lineIdx) => {
@@ -975,7 +946,7 @@
         el.className = 'line';
         el.dataset.chapter = chIdx;
         el.dataset.line = lineIdx;
-
+        const key = chIdx + '-' + lineIdx;
         const displayText = escapeHtml(item.original.trim());
 
         if (item.type === 'narration') {
@@ -985,12 +956,15 @@
           el.classList.add('line-dialogue');
           el.innerHTML = displayText;
           if (item.highlightColor) {
-            el.style.background = item.highlightColor + '33';
-            el.style.borderLeftColor = item.highlightColor;
+            el.style.background = item.highlightColor + '40';
           }
-          el.addEventListener('click', (e) => openColorPopup(e, chIdx, lineIdx, el));
+          if (selectedDialogues.has(key)) {
+            el.classList.add('selected-for-batch');
+          }
+          el.addEventListener('click', (e) => handleDialogueClick(e, chIdx, lineIdx, el));
         } else if (item.type === 'monologue') {
           el.classList.add('line-monologue');
+          el.style.color = monologueColor;
           el.innerHTML = displayText;
         }
 
@@ -999,17 +973,49 @@
     });
   }
 
-  // === 색상 팝업 ===
-  function openColorPopup(e, chIdx, lineIdx, el) {
+  /* ========== DIALOGUE CLICK (SINGLE / MULTI) ========== */
+  function handleDialogueClick(e, chIdx, lineIdx, el) {
     e.stopPropagation();
+    const key = chIdx + '-' + lineIdx;
 
+    if (e.shiftKey) {
+      // 다중 선택 토글
+      if (selectedDialogues.has(key)) {
+        selectedDialogues.delete(key);
+        el.classList.remove('selected-for-batch');
+      } else {
+        selectedDialogues.add(key);
+        el.classList.add('selected-for-batch');
+      }
+      updateBatchBar();
+      closePopup();
+    } else {
+      // 이미 다중 선택 중이면 이 클릭도 다중 선택에 추가
+      if (selectedDialogues.size > 0) {
+        if (selectedDialogues.has(key)) {
+          selectedDialogues.delete(key);
+          el.classList.remove('selected-for-batch');
+        } else {
+          selectedDialogues.add(key);
+          el.classList.add('selected-for-batch');
+        }
+        updateBatchBar();
+        closePopup();
+      } else {
+        // 단일: 팝업
+        openColorPopup(e, chIdx, lineIdx, el);
+      }
+    }
+  }
+
+  /* ========== COLOR POPUP (SINGLE) ========== */
+  function openColorPopup(e, chIdx, lineIdx, el) {
     colorPopup.innerHTML = '';
 
     highlightColors.forEach(c => {
       const btn = document.createElement('button');
       btn.className = 'color-popup-btn';
       btn.style.background = c.value;
-      btn.title = c.name;
       btn.addEventListener('click', (ev) => {
         ev.stopPropagation();
         applyHighlight(chIdx, lineIdx, el, c.value);
@@ -1021,7 +1027,6 @@
     const resetBtn = document.createElement('button');
     resetBtn.className = 'color-popup-btn reset-btn';
     resetBtn.textContent = '✕';
-    resetBtn.title = '색상 제거';
     resetBtn.addEventListener('click', (ev) => {
       ev.stopPropagation();
       applyHighlight(chIdx, lineIdx, el, null);
@@ -1029,15 +1034,11 @@
     });
     colorPopup.appendChild(resetBtn);
 
-    // 위치 계산
     const rect = el.getBoundingClientRect();
     let left = e.clientX;
     let top = rect.bottom + 6;
-
-    // 화면 밖 방지
     if (left + 220 > window.innerWidth) left = window.innerWidth - 230;
     if (top + 50 > window.innerHeight) top = rect.top - 50;
-
     colorPopup.style.left = left + 'px';
     colorPopup.style.top = top + 'px';
     colorPopup.classList.add('show');
@@ -1046,11 +1047,9 @@
   function applyHighlight(chIdx, lineIdx, el, color) {
     chapters[chIdx].lineData[lineIdx].highlightColor = color;
     if (color) {
-      el.style.background = color + '33';
-      el.style.borderLeftColor = color;
+      el.style.background = color + '40';
     } else {
       el.style.background = '';
-      el.style.borderLeftColor = 'transparent';
     }
   }
 
@@ -1058,9 +1057,66 @@
     colorPopup.classList.remove('show');
   }
 
-  document.addEventListener('click', closePopup);
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.color-popup') && !e.target.closest('.line-dialogue')) {
+      closePopup();
+    }
+    // 프리뷰 바깥 클릭 시 다중 선택 해제
+    if (!e.target.closest('.preview-body') && !e.target.closest('.batch-bar') && !e.target.closest('.color-popup')) {
+      if (selectedDialogues.size > 0) {
+        selectedDialogues.clear();
+        renderFullPreview();
+        updateBatchBar();
+      }
+    }
+  });
 
-  // === HTML 변환 ===
+  /* ========== BATCH BAR ========== */
+  function updateBatchBar() {
+    if (selectedDialogues.size > 0) {
+      batchBar.classList.add('active');
+      renderBatchColors();
+    } else {
+      batchBar.classList.remove('active');
+    }
+  }
+
+  function renderBatchColors() {
+    batchColors.innerHTML = '';
+    highlightColors.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'batch-color-btn';
+      btn.style.background = c.value;
+      btn.addEventListener('click', () => applyBatchColor(c.value));
+      batchColors.appendChild(btn);
+    });
+
+    const resetBtn = document.createElement('button');
+    resetBtn.className = 'batch-color-btn reset-btn';
+    resetBtn.textContent = '✕';
+    resetBtn.addEventListener('click', () => applyBatchColor(null));
+    batchColors.appendChild(resetBtn);
+  }
+
+  function applyBatchColor(color) {
+    selectedDialogues.forEach(key => {
+      const [ch, ln] = key.split('-').map(Number);
+      if (chapters[ch] && chapters[ch].lineData[ln]) {
+        chapters[ch].lineData[ln].highlightColor = color;
+      }
+    });
+    selectedDialogues.clear();
+    renderFullPreview();
+    updateBatchBar();
+  }
+
+  batchDeselect.addEventListener('click', () => {
+    selectedDialogues.clear();
+    renderFullPreview();
+    updateBatchBar();
+  });
+
+  /* ========== CONVERT ========== */
   convertBtn.addEventListener('click', () => {
     if (chapters.length === 0) return;
     const html = generateHtml();
@@ -1069,80 +1125,56 @@
   });
 
   function generateHtml() {
-    let parts = [];
+    const parts = [];
+    const mc = monologueColor;
+    const hc = headingColor;
 
-    const containerStart = `<div style="max-width:720px!important;margin:0 auto!important;padding:1.5rem!important;font-family:'Noto Sans KR',sans-serif!important;line-height:1.9!important;color:#3a3a3a!important;font-size:1rem!important;word-break:keep-all!important;overflow-wrap:break-word!important;box-sizing:border-box!important;">`;
-    const containerEnd = `</div>`;
+    parts.push(`<div style="max-width:720px!important;margin:0 auto!important;padding:1.5rem!important;font-family:'Noto Sans KR',sans-serif!important;line-height:1.9!important;color:#3a3a3a!important;font-size:1rem!important;word-break:keep-all!important;overflow-wrap:break-word!important;box-sizing:border-box!important;">`);
 
-    parts.push(containerStart);
+    const multi = chapters.length > 1;
 
     chapters.forEach((ch, chIdx) => {
-      const isMultiChapter = chapters.length > 1;
-
-      if (isMultiChapter) {
+      if (multi) {
         parts.push(`<details${chIdx === 0 ? ' open' : ''}>`);
-        parts.push(`<summary style="font-size:1.05rem!important;font-weight:700!important;color:#b07cc8!important;cursor:pointer!important;padding:0.6rem 0!important;border-bottom:2px solid #e4ddd4!important;margin-bottom:0.5rem!important;list-style:none!important;">${escapeHtml(ch.name)}</summary>`);
+        parts.push(`<summary style="font-size:1.05rem!important;font-weight:700!important;color:${hc}!important;cursor:pointer!important;padding:0.6rem 0!important;border-bottom:2px solid #e4ddd4!important;margin-bottom:0.5rem!important;">${escapeHtml(ch.name)}</summary>`);
       }
 
       ch.lineData.forEach(item => {
-        if (item.type === 'empty') {
-          parts.push('<br>');
-          return;
-        }
-
+        if (item.type === 'empty') { parts.push('<br>'); return; }
         const text = escapeHtml(item.original.trim());
 
         if (item.type === 'narration') {
           parts.push(`<p style="color:#3a3a3a!important;margin:0.4em 0!important;line-height:1.9!important;">${text}</p>`);
         } else if (item.type === 'dialogue') {
           if (item.highlightColor) {
-            parts.push(`<p style="background:${item.highlightColor}33!important;border-left:3px solid ${item.highlightColor}!important;padding-left:0.6em!important;margin:0.4em 0!important;line-height:1.9!important;">${text}</p>`);
+            parts.push(`<p style="background:${item.highlightColor}40!important;padding:0.15em 0.4em!important;border-radius:4px!important;margin:0.4em 0!important;line-height:1.9!important;">${text}</p>`);
           } else {
             parts.push(`<p style="color:#3a3a3a!important;margin:0.4em 0!important;line-height:1.9!important;">${text}</p>`);
           }
         } else if (item.type === 'monologue') {
-          parts.push(`<p style="color:#aaa!important;font-style:italic!important;margin:0.4em 0!important;line-height:1.9!important;">${text}</p>`);
+          parts.push(`<p style="color:${mc}!important;font-style:italic!important;margin:0.4em 0!important;line-height:1.9!important;">${text}</p>`);
         }
       });
 
-      if (isMultiChapter) {
-        parts.push(`</details>`);
-      }
+      if (multi) parts.push(`</details>`);
     });
 
-    parts.push(containerEnd);
+    parts.push(`</div>`);
     return parts.join('\n');
   }
 
-  // === 유틸 ===
+  /* ========== UTILS ========== */
   function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
   }
 
   function copyToClipboard(text) {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text);
-    } else {
+    if (navigator.clipboard) { navigator.clipboard.writeText(text); }
+    else {
       const ta = document.createElement('textarea');
       ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-    }
-  }
+      document
 
-  function showToast(msg) {
-    const toast = document.getElementById('toast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  }
-
-})();
-</script>
-
-</body>
-</html>
+<StatusPlaceHolderImpl/>
